@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.60",
-        "qossmic/deptrac": "^2.0"
+        "qossmic/deptrac": "^2.0",
+        "vimeo/psalm": "^5.25"
     },
     "config": {
         "allow-plugins": {
