@@ -1,0 +1,26 @@
+parameters:
+    paths:
+        - ./src
+    exclude_files:
+        - '#.*test.*#'
+    layers:
+        - name: Application
+          collectors:
+              - type: directory
+                value: src/Application
+        - name: Domain
+          collectors:
+              - type: directory
+                value: src/Domain
+        - name: Infrastructure
+          collectors:
+              - type: directory
+                value: src/Infrastructure
+    ruleset:
+        Application:
+            - Domain
+            - Infrastructure
+        Domain: ~
+        Infrastructure:
+            - Domain
+            - Application
