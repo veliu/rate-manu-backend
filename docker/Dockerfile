@@ -32,6 +32,9 @@ RUN set -eux; \
 		opcache \
 		zip \
         bcmath \
+        pgsql \
+        pdo_pgsql \
+        mbstring \
 	;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
