@@ -1,0 +1,9 @@
+POST https://localhost/api/authentication/register?XDEBUG_SESSION=PHPSTORM
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "lirim@veliu.net",
+  "password": "123456hallo!HALLO"
+}
+###

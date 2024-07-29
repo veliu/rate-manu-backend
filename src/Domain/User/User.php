@@ -12,9 +12,13 @@ use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\Email;
 
+#[ORM\Table(name: 'app_user')]
 #[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    #[ORM\Column(type: 'string', enumType: Status::class)]
+    private Status $status;
+
     /**
      * @psalm-param non-empty-string|null $password
      * @psalm-param list<non-empty-string> $roles
@@ -33,6 +37,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         #[ORM\Column(type: 'json')]
         public array $roles = [],
     ) {
+        $this->status = Status::PENDING_REGISTRATION;
+    }
+
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+    public function activate(): void
+    {
+        $this->status = Status::ACTIVE;
+    }
+
+    public function deactivate(): void
+    {
+        $this->status = Status::INACTIVE;
+    }
+
+    /** @psalm-param non-empty-string $password */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     /** @psalm-return non-empty-string|null */

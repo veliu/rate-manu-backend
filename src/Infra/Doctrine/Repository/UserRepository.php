@@ -6,7 +6,9 @@ namespace Veliu\RateManu\Infra\Doctrine\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\User\User;
+use Veliu\RateManu\Domain\User\UserNotFoundException;
 use Veliu\RateManu\Domain\UserRepositoryInterface;
 
 /**
@@ -22,5 +24,22 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function create(User $user): void
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
+    public function get(Uuid $uuid): User
+    {
+        $user = $this->find($uuid);
+
+        if (null === $user) {
+            throw UserNotFoundException::byUuid($uuid);
+        }
+
+        return $user;
     }
 }
