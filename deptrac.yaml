@@ -1,3 +1,5 @@
+imports:
+  - deptrac.baseline.yaml
 parameters:
     paths:
         - ./src
@@ -12,15 +14,15 @@ parameters:
           collectors:
               - type: directory
                 value: src/Domain
-        - name: Infrastructure
+        - name: Infra
           collectors:
               - type: directory
-                value: src/Infrastructure
+                value: src/Infra
     ruleset:
         Application:
             - Domain
-            - Infrastructure
+            - Infra
         Domain: ~
-        Infrastructure:
+        Infra:
             - Domain
             - Application

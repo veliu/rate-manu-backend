@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\User;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 use Veliu\RateManu\Infra\Doctrine\Repository\UserRepository;
 
@@ -16,6 +22,13 @@ use Veliu\RateManu\Infra\Doctrine\Repository\UserRepository;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableEntity;
+
+    /** @var Collection<string, Group> */
+    #[ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
+    #[JoinTable(name: 'users_groups')]
+    private Collection $groups;
+
     #[ORM\Column(type: 'string', enumType: Status::class)]
     private Status $status;
 
@@ -38,6 +51,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         public array $roles = [],
     ) {
         $this->status = Status::PENDING_REGISTRATION;
+        $now = new \DateTime('now');
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+        $this->groups = new ArrayCollection();
     }
 
     public function getStatus(): Status
@@ -86,5 +103,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email->value;
+    }
+
+    /** @phpstan-return Collection<string, Group> */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addToGroup(Group $group): void
+    {
+        $group->addMember($this);
+        $this->groups->set($group->id->toString(), $group);
+    }
+
+    public function removeFromGroup(Group $group): void
+    {
+        $group->removeMember($this);
+        $this->groups->remove($group->id->toString());
     }
 }

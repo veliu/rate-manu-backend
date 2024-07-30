@@ -28,12 +28,12 @@ final class RegisterActionTest extends WebTestCase
 
         $response = $client->getResponse();
 
+        self::assertEquals(204, $response->getStatusCode());
+        self::assertEmpty($response->getContent());
+
         $confirmationMail = $this->getMailerMessage()?->toString();
 
         self::assertNotEmpty($confirmationMail);
-
-        self::assertEquals(204, $response->getStatusCode());
-        self::assertEmpty($response->getContent());
 
         $client->jsonRequest(method: 'POST', uri: '/api/login_check', parameters: [
             'username' => $user,

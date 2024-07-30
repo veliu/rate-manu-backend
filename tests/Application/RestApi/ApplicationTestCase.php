@@ -11,7 +11,7 @@ use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotEmpty;
 use function Psl\Json\decode;
 
-class ApplicationTest extends WebTestCase
+class ApplicationTestCase extends WebTestCase
 {
     protected function createAuthenticatedClient(string $username = 'user', string $password = 'password'): KernelBrowser
     {

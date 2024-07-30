@@ -6,7 +6,7 @@ namespace Veliu\RateManu\Tests\Application\RestApi\Authentication;
 
 use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\Status;
-use Veliu\RateManu\Tests\Application\RestApi\ApplicationTest;
+use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 
 use function PHPUnit\Framework\assertEquals;
 use function Psl\Json\decode;
@@ -14,9 +14,9 @@ use function Psl\Type\non_empty_string;
 use function Psl\Type\non_empty_vec;
 use function Psl\Type\shape;
 
-final class MeActionTest extends ApplicationTest
+final class MeActionTest extends ApplicationTestCase
 {
-    public function testMe(): void
+    public function testMeResponse(): void
     {
         $userEmail = 'dummy@exmaple.test';
         $client = self::createAuthenticatedClient($userEmail, 'superSECRET1!');
@@ -35,6 +35,7 @@ final class MeActionTest extends ApplicationTest
             'email' => non_empty_string(),
             'status' => non_empty_string(),
             'roles' => non_empty_vec(non_empty_string()),
+            'groups' => non_empty_vec(non_empty_string()),
         ])->matches($body));
 
         self::assertEquals($userEmail, $body['email']);

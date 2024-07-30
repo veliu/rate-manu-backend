@@ -4,6 +4,10 @@ ON_CONTAINER := docker compose exec php
 deptrac:
 	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/deptrac
 
+.PHONY: deptrac-baseline
+deptrac-baseline:
+	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/deptrac --formatter=baseline
+
 .PHONY: cs-fix
 cs-fix:
 	XDEBUG_MODE=off PHP_CS_FIXER_FUTURE_MODE=1 PHP_CS_FIXER_IGNORE_ENV=1 $(ON_CONTAINER) vendor/bin/php-cs-fixer fix --allow-risky=yes --verbose
