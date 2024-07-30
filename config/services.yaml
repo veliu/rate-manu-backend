@@ -14,6 +14,9 @@ services:
     Veliu\RateManu\Domain\User\Handler\:
         resource: '../src/Domain/User/Handler'
 
+    Veliu\RateManu\Domain\Notification\Handler\:
+        resource: '../src/Domain/Notification/Handler'
+
     # Controller
     Veliu\RateManu\Application\RestApi\Authentication\RegisterAction:
         tags: ['controller.service_arguments']

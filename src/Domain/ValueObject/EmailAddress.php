@@ -6,7 +6,7 @@ namespace Veliu\RateManu\Domain\ValueObject;
 
 use Veliu\RateManu\Domain\DataBaseType;
 
-final readonly class Email implements DataBaseType
+final readonly class EmailAddress implements DataBaseType
 {
     public const string REGEX = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
     public const string DATABASE_TYPE_NAME = 'email';

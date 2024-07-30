@@ -9,11 +9,11 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
-use Veliu\RateManu\Domain\ValueObject\Email;
+use Veliu\RateManu\Domain\ValueObject\EmailAddress;
+use Veliu\RateManu\Infra\Doctrine\Repository\UserRepository;
 
 #[ORM\Table(name: 'app_user')]
-#[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(type: 'string', enumType: Status::class)]
@@ -28,8 +28,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         readonly public Uuid $id,
 
-        #[ORM\Column(type: Email::DATABASE_TYPE_NAME, unique: true)]
-        readonly public Email $email,
+        #[ORM\Column(type: EmailAddress::DATABASE_TYPE_NAME, unique: true)]
+        readonly public EmailAddress $email,
 
         #[ORM\Column(type: 'string')]
         public ?string $password,

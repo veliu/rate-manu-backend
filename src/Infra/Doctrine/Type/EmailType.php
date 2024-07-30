@@ -6,14 +6,14 @@ namespace Veliu\RateManu\Infra\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Veliu\RateManu\Domain\ValueObject\Email;
+use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 final class EmailType extends Type
 {
-    public function convertToPHPValue($value, AbstractPlatform $platform): Email
+    public function convertToPHPValue($value, AbstractPlatform $platform): EmailAddress
     {
         if (is_string($value) && '' !== $value) {
-            return new Email($value);
+            return new EmailAddress($value);
         }
 
         throw new \LogicException('Expected string or email type');
@@ -21,7 +21,7 @@ final class EmailType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        if ($value instanceof Email) {
+        if ($value instanceof EmailAddress) {
             return $value->value;
         }
 
@@ -41,6 +41,6 @@ final class EmailType extends Type
     #[\Override]
     public function getName(): string
     {
-        return Email::getDatabaseTypeName();
+        return EmailAddress::getDatabaseTypeName();
     }
 }

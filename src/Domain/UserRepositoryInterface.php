@@ -8,7 +8,7 @@ use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\User\Exception\UserNotCreatedException;
 use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
 use Veliu\RateManu\Domain\User\User;
-use Veliu\RateManu\Domain\ValueObject\Email;
+use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 interface UserRepositoryInterface
 {
@@ -19,5 +19,5 @@ interface UserRepositoryInterface
     public function get(Uuid $uuid): User;
 
     /** @throws UserNotFoundException */
-    public function getByEmail(Email $email): User;
+    public function getByEmail(EmailAddress $email): User;
 }

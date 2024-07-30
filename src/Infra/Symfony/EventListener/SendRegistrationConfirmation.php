@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Infra\Symfony\EventListener;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Veliu\RateManu\Domain\Notification\Command\SendRegistrationConfirmationNotification;
 use Veliu\RateManu\Domain\User\Event\UserRegistered;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
 
 #[AsEventListener]
 final readonly class SendRegistrationConfirmation
 {
     public function __construct(
-        private MailerInterface $mailer,
-        private UserRepositoryInterface $userRepository,
-        private LoggerInterface $logger,
+        private MessageBusInterface $messageBus,
     ) {
     }
 
     public function __invoke(UserRegistered $event): void
     {
-        $user = $this->userRepository->get($event->uuid);
+        $this->messageBus->dispatch(new SendRegistrationConfirmationNotification($event->uuid));
     }
 }

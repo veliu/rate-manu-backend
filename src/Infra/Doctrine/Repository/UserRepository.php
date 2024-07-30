@@ -11,7 +11,7 @@ use Veliu\RateManu\Domain\User\Exception\UserNotCreatedException;
 use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
 use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Domain\UserRepositoryInterface;
-use Veliu\RateManu\Domain\ValueObject\Email;
+use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -52,7 +52,7 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
         return $user;
     }
 
-    public function getByEmail(Email $email): User
+    public function getByEmail(EmailAddress $email): User
     {
         $user = $this->findOneBy(['email' => $email]);
 

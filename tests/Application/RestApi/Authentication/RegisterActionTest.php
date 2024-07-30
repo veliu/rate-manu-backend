@@ -12,7 +12,6 @@ final class RegisterActionTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Request a specific page
         $client->jsonRequest(
             method: 'POST',
             uri: '/api/authentication/register',
@@ -22,6 +21,7 @@ final class RegisterActionTest extends WebTestCase
         $response = $client->getResponse();
 
         self::assertEquals(204, $response->getStatusCode());
+        self::assertEmpty($response->getContent());
     }
 
     public function tearDown(): void
