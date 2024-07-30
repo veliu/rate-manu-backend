@@ -4,3 +4,10 @@ rest_authentication:
     namespace: Veliu\RateManu\Application\RestApi\Authentication
   type: attribute
   prefix: /api/authentication/
+
+rest_user:
+  resource:
+    path: ../src/Application/RestApi/User/
+    namespace: Veliu\RateManu\Application\RestApi\User
+  type: attribute
+  prefix: /api/user/

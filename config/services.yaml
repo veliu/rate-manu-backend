@@ -24,6 +24,9 @@ services:
     Veliu\RateManu\Application\RestApi\Authentication\ConfirmUserRegistrationAction:
         tags: [ 'controller.service_arguments' ]
 
+    Veliu\RateManu\Application\RestApi\Authentication\MeAction:
+        tags: [ 'controller.service_arguments' ]
+
     Veliu\RateManu\Domain\UserRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\UserRepository'
 
     Veliu\RateManu\Application\RestApi\UserChecker: ~

@@ -32,8 +32,6 @@ final class RegisterActionTest extends WebTestCase
 
         self::assertNotEmpty($confirmationMail);
 
-        self::assertNotEmpty($confirmationMail);
-
         self::assertEquals(204, $response->getStatusCode());
         self::assertEmpty($response->getContent());
 
