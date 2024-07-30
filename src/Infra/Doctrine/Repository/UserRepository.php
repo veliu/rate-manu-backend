@@ -7,9 +7,11 @@ namespace Veliu\RateManu\Infra\Doctrine\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
+use Veliu\RateManu\Domain\User\Exception\UserNotCreatedException;
+use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
 use Veliu\RateManu\Domain\User\User;
-use Veliu\RateManu\Domain\User\UserNotFoundException;
 use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\ValueObject\Email;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -28,8 +30,15 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
 
     public function create(User $user): void
     {
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $email = $user->email;
+
+        try {
+            $this->getByEmail($email);
+            throw UserNotCreatedException::userWithEmailAlreadyExists($email);
+        } catch (UserNotFoundException) {
+            $this->getEntityManager()->persist($user);
+            $this->getEntityManager()->flush();
+        }
     }
 
     public function get(Uuid $uuid): User
@@ -38,6 +47,17 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
 
         if (null === $user) {
             throw UserNotFoundException::byUuid($uuid);
+        }
+
+        return $user;
+    }
+
+    public function getByEmail(Email $email): User
+    {
+        $user = $this->findOneBy(['email' => $email]);
+
+        if (null === $user) {
+            throw UserNotFoundException::byEmail($email);
         }
 
         return $user;

@@ -23,7 +23,5 @@ final readonly class SendRegistrationConfirmation
     public function __invoke(UserRegistered $event): void
     {
         $user = $this->userRepository->get($event->uuid);
-
-        $this->logger->debug('sending email...');
     }
 }

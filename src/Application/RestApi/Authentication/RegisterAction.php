@@ -23,6 +23,6 @@ final readonly class RegisterAction
     ): JsonResponse {
         $this->messageBus->dispatch($registerUserRequest->toDomainCommand());
 
-        return new JsonResponse(['hallo' => 'test'], 208);
+        return new JsonResponse(null, 204);
     }
 }

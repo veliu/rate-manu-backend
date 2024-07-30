@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         readonly public Uuid $id,
 
-        #[ORM\Column(type: Email::DATABASE_TYPE_NAME)]
+        #[ORM\Column(type: Email::DATABASE_TYPE_NAME, unique: true)]
         readonly public Email $email,
 
         #[ORM\Column(type: 'string')]
