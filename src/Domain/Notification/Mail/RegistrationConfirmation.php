@@ -13,13 +13,14 @@ final readonly class RegistrationConfirmation
     {
     }
 
-    public static function create(EmailAddress $to): Email
+    public static function create(EmailAddress $to, string $token): Email
     {
+        $confirmationLink = sprintf('%s?token=%s', 'https://localhost/api/authentication/confirm-registration', $token);
+
         return (new Email())
         ->from('hello@ratemanu.com')
         ->to($to->value)
         ->subject('Confirm your registration')
-        ->text('Bitte bestätigen Sie ihre Registrierung!')
-        ->html('<p>Bitte bestätigen Sie ihre Registrierung</p>');
+        ->text(sprintf('Bitte bestätigen Sie ihre Registrierung! %s', $confirmationLink));
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Veliu\RateManu\Application\Request\RegisterUserRequest;
 
 #[Route(path: '/register', methods: ['POST'], format: 'application/json')]
-final readonly class RegisterAction
+final readonly class RegisterUserAction
 {
     public function __construct(
         private MessageBusInterface $messageBus,

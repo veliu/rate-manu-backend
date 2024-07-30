@@ -18,7 +18,12 @@ services:
         resource: '../src/Domain/Notification/Handler'
 
     # Controller
-    Veliu\RateManu\Application\RestApi\Authentication\RegisterAction:
+    Veliu\RateManu\Application\RestApi\Authentication\RegisterUserAction:
         tags: ['controller.service_arguments']
 
+    Veliu\RateManu\Application\RestApi\Authentication\ConfirmUserRegistrationAction:
+        tags: [ 'controller.service_arguments' ]
+
     Veliu\RateManu\Domain\UserRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\UserRepository'
+
+    Veliu\RateManu\Application\RestApi\UserChecker: ~
