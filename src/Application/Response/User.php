@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\Response;
 
+use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\User as UserEntity;
 
 use function Psl\Type\non_empty_string;
-use function Psl\Type\vec;
 
 final readonly class User
 {
@@ -31,7 +31,9 @@ final readonly class User
     {
         $id = non_empty_string()->coerce($entity->id->toString());
 
-        $groupIds = vec(non_empty_string())->coerce($entity->getGroups()->getKeys());
+        $groupIds = array_values(array_map(
+            static fn (Group $group) => non_empty_string()->coerce($group->id->toString()),
+            $entity->getGroups()->toArray()));
 
         return new self($id, $entity->email->value, $entity->getStatus()->value, $entity->getRoles(), $groupIds);
     }

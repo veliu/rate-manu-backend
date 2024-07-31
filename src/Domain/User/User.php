@@ -24,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
-    /** @var Collection<string, Group> */
+    /** @var Collection&ArrayCollection<string, Group> */
     #[ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     #[JoinTable(name: 'users_groups')]
     private Collection $groups;
@@ -113,13 +113,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addToGroup(Group $group): void
     {
-        $group->addMember($this);
         $this->groups->set($group->id->toString(), $group);
     }
 
     public function removeFromGroup(Group $group): void
     {
-        $group->removeMember($this);
         $this->groups->remove($group->id->toString());
     }
 }

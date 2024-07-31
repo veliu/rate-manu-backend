@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Tests\Application\RestApi\Authentication;
 
+use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\Status;
 use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 
-use function PHPUnit\Framework\assertEquals;
 use function Psl\Json\decode;
 use function Psl\Type\non_empty_string;
 use function Psl\Type\non_empty_vec;
@@ -38,8 +38,19 @@ final class MeActionTest extends ApplicationTestCase
             'groups' => non_empty_vec(non_empty_string()),
         ])->matches($body));
 
+        self::assertIsString($body['uuid']);
+        self::assertNotEmpty($body['uuid']);
+        self::assertTrue(Uuid::isValid($body['uuid']));
         self::assertEquals($userEmail, $body['email']);
-        assertEquals(Status::ACTIVE->value, $body['status']);
-        assertEquals([Role::OWNER->value], $body['roles']);
+        self::assertEquals(Status::ACTIVE->value, $body['status']);
+        self::assertEquals([Role::OWNER->value], $body['roles']);
+        self::assertIsArray($body['groups']);
+        self::assertNotEmpty($body['groups']);
+
+        foreach ($body['groups'] as $groupId) {
+            self::assertIsString($groupId);
+            self::assertNotEmpty($groupId);
+            self::assertTrue(Uuid::isValid($groupId));
+        }
     }
 }
