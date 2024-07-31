@@ -13,7 +13,7 @@ use Veliu\RateManu\Domain\User\Event\UserInvited;
 use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
 use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\User;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
 use function Psl\Type\instance_of;
 

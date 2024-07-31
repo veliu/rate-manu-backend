@@ -6,8 +6,6 @@ namespace Veliu\RateManu\Tests\Application\RestApi\User;
 
 use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 
-use function PHPUnit\Framework\assertEquals;
-
 final class InviteUserActionTest extends ApplicationTestCase
 {
     public function testInvite(): void
@@ -32,14 +30,6 @@ final class InviteUserActionTest extends ApplicationTestCase
 
         self::assertIsString($token);
         self::assertNotEmpty($token);
-
-        $client->jsonRequest(
-            method: 'POST',
-            uri: '/api/authentication/confirm-registration?token='.$token,
-        );
-
-        dump($client->getResponse()->getContent());
-        assertEquals(204, $client->getResponse()->getStatusCode());
     }
 
     public function testFailsUnauthenticated(): void

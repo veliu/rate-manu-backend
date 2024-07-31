@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Veliu\RateManu\Application\Response\User;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 #[Route(path: '/me', methods: ['GET'], format: 'application/json')]

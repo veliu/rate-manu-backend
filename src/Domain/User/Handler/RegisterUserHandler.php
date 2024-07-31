@@ -12,7 +12,7 @@ use Veliu\RateManu\Domain\User\Command\RegisterUser;
 use Veliu\RateManu\Domain\User\Event\UserRegistered;
 use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\User;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
 use function Psl\Type\non_empty_string;
 

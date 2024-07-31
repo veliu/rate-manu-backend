@@ -13,7 +13,7 @@ use function Psl\Json\decode;
 
 class ApplicationTestCase extends WebTestCase
 {
-    protected function createAuthenticatedClient(string $username = 'user', string $password = 'password'): KernelBrowser
+    protected function createAuthenticatedClient(string $username = 'dummy@exmaple.test', string $password = '111superSECRET!'): KernelBrowser
     {
         $client = static::createClient();
 

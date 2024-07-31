@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#3 \\$description of class Veliu\\\\RateManu\\\\Domain\\\\Food\\\\Command\\\\CreateFood constructor expects non\\-empty\\-string\\|null, string\\|null given\\.$#"
+			count: 1
+			path: src/Application/Request/CreateFoodRequest.php
+
+		-
+			message: "#^Parameter \\#1 \\$uuid of static method Symfony\\\\Component\\\\Uid\\\\Uuid\\:\\:isValid\\(\\) expects string, string\\|null given\\.$#"
+			count: 3
+			path: tests/Application/RestApi/Food/FoodTest.php

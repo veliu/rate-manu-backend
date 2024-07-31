@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\Command\ConfirmUserRegistration;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 #[AsMessageHandler]

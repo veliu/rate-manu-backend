@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Veliu\RateManu\Domain;
+namespace Veliu\RateManu\Domain\User;
 
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\User\Exception\UserNotCreatedException;
 use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
-use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 interface UserRepositoryInterface

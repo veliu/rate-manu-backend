@@ -11,3 +11,10 @@ rest_user:
     namespace: Veliu\RateManu\Application\RestApi\User
   type: attribute
   prefix: /api/user/
+
+rest_food:
+  resource:
+    path: ../src/Application/RestApi/Food/
+    namespace: Veliu\RateManu\Application\RestApi\Food
+  type: attribute
+  prefix: /api/food/

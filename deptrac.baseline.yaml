@@ -1,8 +1,10 @@
 deptrac:
   skip_violations:
-    Veliu\RateManu\Domain\FoodRating\FoodRating:
-      - Veliu\RateManu\Infra\Doctrine\Repository\FoodRatingRepository
+    Veliu\RateManu\Domain\Food\Food:
+      - Veliu\RateManu\Infra\Doctrine\Repository\FoodRepository
     Veliu\RateManu\Domain\Group\Group:
       - Veliu\RateManu\Infra\Doctrine\Repository\GroupRepository
+    Veliu\RateManu\Domain\Rating\Rating:
+      - Veliu\RateManu\Infra\Doctrine\Repository\RatingRepository
     Veliu\RateManu\Domain\User\User:
       - Veliu\RateManu\Infra\Doctrine\Repository\UserRepository

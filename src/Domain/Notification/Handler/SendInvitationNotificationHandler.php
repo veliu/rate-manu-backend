@@ -12,7 +12,7 @@ use Veliu\RateManu\Domain\Exception\MailNotSend;
 use Veliu\RateManu\Domain\Notification\Command\SendInvitationNotification;
 use Veliu\RateManu\Domain\Notification\Mail\Invitation;
 use Veliu\RateManu\Domain\User\Status;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
 #[AsMessageHandler]
 final readonly class SendInvitationNotificationHandler

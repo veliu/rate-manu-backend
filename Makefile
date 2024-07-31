@@ -16,6 +16,10 @@ cs-fix:
 phpstan:
 	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/phpstan analyse
 
+.PHONY: phpstan-baseline
+phpstan-baseline:
+	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/phpstan analyse --generate-baseline
+
 .PHONY: tests
 tests:
 	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/phpunit -d --testdox

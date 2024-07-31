@@ -12,7 +12,7 @@ use Veliu\RateManu\Domain\Exception\MailNotSend;
 use Veliu\RateManu\Domain\Notification\Command\SendRegistrationConfirmationNotification;
 use Veliu\RateManu\Domain\Notification\Mail\RegistrationConfirmation;
 use Veliu\RateManu\Domain\User\Status;
-use Veliu\RateManu\Domain\UserRepositoryInterface;
+use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
 #[AsMessageHandler]
 final readonly class SendRegistrationConfirmationNotificationHandler
