@@ -27,6 +27,6 @@ final readonly class RegisterUserRequest
         $email = non_empty_string()->coerce($this->email);
         $password = non_empty_string()->coerce($this->password);
 
-        return new RegisterUser(new EmailAddress($email), $password);
+        return new RegisterUser(EmailAddress::fromAny($email), $password);
     }
 }

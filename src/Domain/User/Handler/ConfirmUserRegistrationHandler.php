@@ -32,7 +32,7 @@ final readonly class ConfirmUserRegistrationHandler
             throw new AuthenticationException('Confirmation not valid');
         }
 
-        $email = new EmailAddress($payload['username']);
+        $email = EmailAddress::fromAny($payload['username']);
 
         $user = $this->userRepository->getByEmail($email);
 

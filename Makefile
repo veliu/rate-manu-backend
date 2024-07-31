@@ -23,3 +23,17 @@ tests:
 .PHONY: qa
 qa: cs-fix deptrac phpstan
 
+database-test-recreate:
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:database:drop -f --if-exists --env=test
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:database:create --env=test
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:schema:create --env=test
+
+database-recreate:
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:database:drop -f --if-exists
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:database:create
+
+database-diff-migrate:
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:migration:diff
+	XDEBUG_MODE=off $(ON_CONTAINER) bin/console doctrine:migration:migrate -n
+
+schema-rebuild: database-recreate database-diff-migrate

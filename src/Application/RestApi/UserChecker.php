@@ -21,6 +21,10 @@ final readonly class UserChecker implements UserCheckerInterface
         if (Status::ACTIVE !== $user->getStatus()) {
             throw new CustomUserMessageAccountStatusException('You need to confirm your registration first.');
         }
+
+        if (null === $user->getPassword()) {
+            throw new CustomUserMessageAccountStatusException('You need to set a password first.');
+        }
     }
 
     public function checkPostAuth(UserInterface $user): void

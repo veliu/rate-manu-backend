@@ -12,11 +12,7 @@ final class EmailType extends Type
 {
     public function convertToPHPValue($value, AbstractPlatform $platform): EmailAddress
     {
-        if (is_string($value) && '' !== $value) {
-            return new EmailAddress($value);
-        }
-
-        throw new \LogicException('Expected string or email type');
+        return EmailAddress::fromAny($value);
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string

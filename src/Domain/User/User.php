@@ -25,16 +25,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     use TimestampableEntity;
 
     /** @var Collection&ArrayCollection<string, Group> */
-    #[ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
+    #[ManyToMany(targetEntity: Group::class, inversedBy: 'users', cascade: ['persist'])]
     #[JoinTable(name: 'users_groups')]
     private Collection $groups;
 
     #[ORM\Column(type: 'string', enumType: Status::class)]
     private Status $status;
 
+    /** @phpstan-var list<non-empty-string> */
+    #[ORM\Column(type: 'json')]
+    private array $roles;
+
     /**
      * @psalm-param non-empty-string|null $password
-     * @psalm-param list<non-empty-string> $roles
+     * @psalm-param list<Role> $roles
      */
     public function __construct(
         #[ORM\Id]
@@ -44,17 +48,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         #[ORM\Column(type: EmailAddress::DATABASE_TYPE_NAME, unique: true)]
         readonly public EmailAddress $email,
 
-        #[ORM\Column(type: 'string')]
-        public ?string $password,
+        #[ORM\Column(type: 'string', nullable: true)]
+        public ?string $password = null,
 
-        #[ORM\Column(type: 'json')]
-        public array $roles = [],
+        array $roles = [],
     ) {
         $this->status = Status::PENDING_REGISTRATION;
         $now = new \DateTime('now');
         $this->createdAt = $now;
         $this->updatedAt = $now;
         $this->groups = new ArrayCollection();
+        $this->roles = array_map(static fn (Role $role) => $role->value, $roles);
     }
 
     public function getStatus(): Status

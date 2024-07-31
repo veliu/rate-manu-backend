@@ -28,7 +28,7 @@ final readonly class RegisterUserHandler
 
     public function __invoke(RegisterUser $command): void
     {
-        $user = new User(Uuid::v4(), $command->email, null, [Role::OWNER->value]);
+        $user = new User(Uuid::v4(), $command->email, null, [Role::OWNER]);
 
         $password = $command->password;
 

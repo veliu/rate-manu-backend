@@ -18,14 +18,18 @@ services:
         resource: '../src/Domain/Notification/Handler'
 
     # Controller
-    Veliu\RateManu\Application\RestApi\Authentication\RegisterUserAction:
+    Veliu\RateManu\Application\RestApi\Authentication\:
+        resource: '../src/Application/RestApi/Authentication'
         tags: ['controller.service_arguments']
 
-    Veliu\RateManu\Application\RestApi\Authentication\ConfirmUserRegistrationAction:
+    Veliu\RateManu\Application\RestApi\User\:
+        resource: '../src/Application/RestApi/User'
         tags: [ 'controller.service_arguments' ]
 
-    Veliu\RateManu\Application\RestApi\Authentication\MeAction:
-        tags: [ 'controller.service_arguments' ]
+
+    Veliu\RateManu\Application\ValueResolver\:
+        resource: '../src/Application/ValueResolver'
+        tags: [ 'controller.argument_value_resolver', 'controller.targeted_value_resolver' ]
 
     Veliu\RateManu\Domain\UserRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\UserRepository'
 

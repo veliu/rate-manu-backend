@@ -11,8 +11,6 @@ use Veliu\RateManu\Application\Response\User;
 use Veliu\RateManu\Domain\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
-use function Psl\Type\non_empty_string;
-
 #[Route(path: '/me', methods: ['GET'], format: 'application/json')]
 final readonly class MeAction
 {
@@ -24,7 +22,7 @@ final readonly class MeAction
     public function __invoke(UserInterface $authenticatedUser): JsonResponse
     {
         $user = $this->userRepository->getByEmail(
-            new EmailAddress(non_empty_string()->coerce($authenticatedUser->getUserIdentifier()))
+            EmailAddress::fromAny($authenticatedUser->getUserIdentifier())
         );
 
         return new JsonResponse((array) User::fromEntity($user), 200);
