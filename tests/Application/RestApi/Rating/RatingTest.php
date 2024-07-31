@@ -97,7 +97,7 @@ final class RatingTest extends ApplicationTestCase
         self::assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->jsonRequest(
-            method: 'POST',
+            method: 'PUT',
             uri: '/api/rating/'.$ratingId->toString(),
             parameters: [
                 'rating' => 1,

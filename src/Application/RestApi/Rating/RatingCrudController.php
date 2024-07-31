@@ -41,7 +41,7 @@ final readonly class RatingCrudController
         return new JsonResponse(RatingResponse::fromEntity($rating), 200);
     }
 
-    #[Route(path: '/{id}', methods: ['POST'], format: 'application/json')]
+    #[Route(path: '/{id}', methods: ['PUT'], format: 'application/json')]
     public function update(
         #[MapRequestPayload] UpdateRatingRequest $requestPayload,
         Uuid $id,

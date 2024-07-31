@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\Request;
 
+use OpenApi\Attributes as OA;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Rating\Command\CreateRating;
 use Veliu\RateManu\Domain\User\User;
@@ -14,8 +15,11 @@ use function Psl\Type\positive_int;
 final readonly class CreateRatingRequest
 {
     public function __construct(
+        #[OA\Property(type: 'string')]
         public mixed $id,
+        #[OA\Property(type: 'string')]
         public mixed $food,
+        #[OA\Property(type: 'int')]
         public mixed $rating
     ) {
     }

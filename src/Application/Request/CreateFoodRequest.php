@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\Request;
 
+use OpenApi\Attributes as OA;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Food\Command\CreateFood;
 use Veliu\RateManu\Domain\Group\Group;
@@ -15,8 +16,11 @@ use function Psl\Type\nullable;
 final readonly class CreateFoodRequest
 {
     public function __construct(
+        #[OA\Property(type: 'string')]
         public mixed $id,
+        #[OA\Property(type: 'string')]
         public mixed $name,
+        #[OA\Property(type: 'string', nullable: true)]
         public mixed $description,
     ) {
     }
