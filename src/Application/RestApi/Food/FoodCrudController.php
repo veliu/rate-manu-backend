@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
-use Veliu\RateManu\Application\Response\Food;
+use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\User;
@@ -39,6 +39,6 @@ final readonly class FoodCrudController
 
         $food = $this->foodRepository->get($command->uuid);
 
-        return new JsonResponse(Food::fromEntity($food), 200);
+        return new JsonResponse(FoodResponse::fromEntity($food), 200);
     }
 }

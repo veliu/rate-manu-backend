@@ -18,3 +18,10 @@ rest_food:
     namespace: Veliu\RateManu\Application\RestApi\Food
   type: attribute
   prefix: /api/food/
+
+rest_rating:
+  resource:
+    path: ../src/Application/RestApi/Rating/
+    namespace: Veliu\RateManu\Application\RestApi\Rating
+  type: attribute
+  prefix: /api/rating/

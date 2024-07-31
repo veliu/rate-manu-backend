@@ -9,7 +9,7 @@ use Veliu\RateManu\Domain\User\User as UserEntity;
 
 use function Psl\Type\non_empty_string;
 
-final readonly class User
+final readonly class UserResponse
 {
     /**
      * @phpstan-param non-empty-string $uuid

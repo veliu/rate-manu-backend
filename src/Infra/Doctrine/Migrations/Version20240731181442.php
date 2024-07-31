@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240731142853 extends AbstractMigration
+final class Version20240731181442 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -35,7 +35,7 @@ final class Version20240731142853 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_FF8AB7E0FE54D947 ON users_groups (group_id)');
         $this->addSql('COMMENT ON COLUMN users_groups.user_id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN users_groups.group_id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE food (id UUID NOT NULL, group_id UUID DEFAULT NULL, user_id UUID DEFAULT NULL, name VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE food (id UUID NOT NULL, group_id UUID DEFAULT NULL, user_id UUID DEFAULT NULL, name VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D43829F7FE54D947 ON food (group_id)');
         $this->addSql('CREATE INDEX IDX_D43829F7A76ED395 ON food (user_id)');
         $this->addSql('COMMENT ON COLUMN food.id IS \'(DC2Type:uuid)\'');

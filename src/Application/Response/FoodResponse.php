@@ -9,7 +9,7 @@ use Veliu\RateManu\Domain\Food\Food as Entity;
 
 use function Psl\Type\non_empty_string;
 
-final readonly class Food
+final readonly class FoodResponse
 {
     public function __construct(
         public Uuid $id,

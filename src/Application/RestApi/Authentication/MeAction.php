@@ -7,7 +7,7 @@ namespace Veliu\RateManu\Application\RestApi\Authentication;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Veliu\RateManu\Application\Response\User;
+use Veliu\RateManu\Application\Response\UserResponse;
 use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
@@ -25,6 +25,6 @@ final readonly class MeAction
             EmailAddress::fromAny($authenticatedUser->getUserIdentifier())
         );
 
-        return new JsonResponse((array) User::fromEntity($user), 200);
+        return new JsonResponse((array) UserResponse::fromEntity($user), 200);
     }
 }

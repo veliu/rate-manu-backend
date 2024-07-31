@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\Notification\Handler;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -20,7 +20,7 @@ final readonly class SendRegistrationConfirmationNotificationHandler
     public function __construct(
         private UserRepositoryInterface $userRepository,
         private MailerInterface $mailer,
-        private JWTTokenManagerInterface $tokenManager,
+        private JWTEncoderInterface $encoder,
     ) {
     }
 
@@ -32,7 +32,9 @@ final readonly class SendRegistrationConfirmationNotificationHandler
             return;
         }
 
-        $token = $this->tokenManager->create($user);
+        $token = $this->encoder->encode([
+            'username' => $user->email->value,
+        ]);
 
         $email = RegistrationConfirmation::create($user->email, $token);
 

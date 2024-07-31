@@ -24,7 +24,7 @@ class Rating
 
         #[ORM\ManyToOne(targetEntity: User::class)]
         #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
-        public readonly User $author,
+        public readonly User $createdBy,
 
         #[ORM\ManyToOne(targetEntity: Food::class)]
         #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]

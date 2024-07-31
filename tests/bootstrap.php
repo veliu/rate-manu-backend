@@ -17,16 +17,4 @@ passthru(sprintf(
     __DIR__
 ));
 
-passthru(sprintf(
-    'APP_ENV=%s php "%s/../bin/console" doctrine:schema:drop -f -q',
-    $_ENV['APP_ENV'],
-    __DIR__
-));
-
-passthru(sprintf(
-    'APP_ENV=%s php "%s/../bin/console" doctrine:schema:create -q',
-    $_ENV['APP_ENV'],
-    __DIR__
-));
-
 set_exception_handler([new ErrorHandler(), 'handleException']);
