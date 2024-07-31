@@ -27,7 +27,7 @@ class Rating
         public readonly User $createdBy,
 
         #[ORM\ManyToOne(targetEntity: Food::class)]
-        #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+        #[ORM\JoinColumn(name: 'food_id', referencedColumnName: 'id')]
         public readonly Food $food,
 
         #[ORM\Column(type: 'integer')]

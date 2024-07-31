@@ -28,6 +28,6 @@ final readonly class CreateRatingHandler
 
         $rating = new Rating($command->id, $user, $food, $command->rating);
 
-        $this->ratingRepository->create($rating);
+        $this->ratingRepository->save($rating);
     }
 }

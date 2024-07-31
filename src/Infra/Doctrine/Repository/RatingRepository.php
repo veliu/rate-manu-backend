@@ -35,7 +35,7 @@ final class RatingRepository extends ServiceEntityRepository implements RatingRe
         return $result;
     }
 
-    public function create(Rating $rating): void
+    public function save(Rating $rating): void
     {
         $this->getEntityManager()->persist($rating);
         $this->getEntityManager()->flush();

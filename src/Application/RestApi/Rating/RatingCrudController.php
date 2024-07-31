@@ -9,7 +9,9 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\CreateRatingRequest;
+use Veliu\RateManu\Application\Request\UpdateRatingRequest;
 use Veliu\RateManu\Application\Response\RatingResponse;
 use Veliu\RateManu\Domain\Rating\RatingRepositoryInterface;
 use Veliu\RateManu\Domain\User\User;
@@ -31,6 +33,22 @@ final readonly class RatingCrudController
     ): JsonResponse {
         $domainUser = instance_of(User::class)->coerce($user);
         $command = $requestPayload->toDomainCommand($domainUser);
+
+        $this->messageBus->dispatch($command);
+
+        $rating = $this->ratingRepository->get($command->id);
+
+        return new JsonResponse(RatingResponse::fromEntity($rating), 200);
+    }
+
+    #[Route(path: '/{id}', methods: ['POST'], format: 'application/json')]
+    public function update(
+        #[MapRequestPayload] UpdateRatingRequest $requestPayload,
+        Uuid $id,
+        UserInterface $user,
+    ): JsonResponse {
+        $domainUser = instance_of(User::class)->coerce($user);
+        $command = $requestPayload->toDomainCommand($domainUser, $id);
 
         $this->messageBus->dispatch($command);
 

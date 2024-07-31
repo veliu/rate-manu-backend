@@ -12,5 +12,5 @@ interface RatingRepositoryInterface
     /** @throws NotFoundException */
     public function get(Uuid $uuid): Rating;
 
-    public function create(Rating $rating): void;
+    public function save(Rating $rating): void;
 }
