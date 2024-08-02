@@ -71,6 +71,9 @@ final class RegisterActionTest extends WebTestCase
 
         $content = decode($content);
 
-        self::assertTrue(shape(['token' => non_empty_string()])->matches($content));
+        self::assertTrue(shape([
+            'token' => non_empty_string(),
+            'refresh_token' => non_empty_string(),
+        ])->matches($content));
     }
 }

@@ -58,8 +58,10 @@ class ApplicationTestCase extends WebTestCase
         self::assertIsArray($data);
 
         $token = $data['token'] ?? null;
+        $refreshToken = $data['refresh_token'] ?? null;
 
         assertNotEmpty($token);
+        assertNotEmpty($refreshToken);
 
         $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
 

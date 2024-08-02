@@ -25,9 +25,9 @@ final readonly class FoodCrudController
     ) {
     }
 
-    #[Route(path: '/', methods: ['POST'], format: 'application/json')]
+    #[Route(path: '/', methods: ['POST'], format: 'json')]
     public function create(
-        #[MapRequestPayload] CreateFoodRequest $requestPayload,
+        #[MapRequestPayload(acceptFormat: 'json')] CreateFoodRequest $requestPayload,
         UserInterface $user,
     ): JsonResponse {
         $user = instance_of(User::class)->coerce($user);

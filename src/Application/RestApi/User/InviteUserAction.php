@@ -13,7 +13,7 @@ use Veliu\RateManu\Application\ValueResolver\EmailAddressValueResolver;
 use Veliu\RateManu\Domain\User\Command\InviteUser;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
-#[Route(path: '/invite/{emailAddress}', methods: ['POST'], format: 'application/json')]
+#[Route(path: '/invite/{emailAddress}', methods: ['POST'], format: 'json')]
 final readonly class InviteUserAction
 {
     public function __construct(

@@ -26,9 +26,9 @@ final readonly class RatingCrudController
     ) {
     }
 
-    #[Route(path: '/', methods: ['POST'], format: 'application/json')]
+    #[Route(path: '/', methods: ['POST'], format: 'json')]
     public function create(
-        #[MapRequestPayload] CreateRatingRequest $requestPayload,
+        #[MapRequestPayload(acceptFormat: 'json')] CreateRatingRequest $requestPayload,
         UserInterface $user,
     ): JsonResponse {
         $domainUser = instance_of(User::class)->coerce($user);
@@ -41,9 +41,9 @@ final readonly class RatingCrudController
         return new JsonResponse(RatingResponse::fromEntity($rating), 200);
     }
 
-    #[Route(path: '/{id}', methods: ['PUT'], format: 'application/json')]
+    #[Route(path: '/{id}', methods: ['PUT'], format: 'json')]
     public function update(
-        #[MapRequestPayload] UpdateRatingRequest $requestPayload,
+        #[MapRequestPayload(acceptFormat: 'json')] UpdateRatingRequest $requestPayload,
         Uuid $id,
         UserInterface $user,
     ): JsonResponse {

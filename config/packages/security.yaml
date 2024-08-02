@@ -21,10 +21,13 @@ security:
             user_checker: Veliu\RateManu\Application\RestApi\UserChecker
             pattern: ^/api
             stateless: true
+            entry_point: jwt
             jwt: ~
+            refresh_jwt:
+                check_path: /api/token/refresh
 
     access_control:
-        - { path: ^/api/doc, roles: PUBLIC_ACCESS }
+        - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/authentication/confirm-registration, roles: PUBLIC_ACCESS }
         - { path: ^/api/authentication/register, roles: PUBLIC_ACCESS }

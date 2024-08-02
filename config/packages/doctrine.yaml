@@ -18,6 +18,12 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
+            Infra:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Infra/Doctrine/Entity'
+                prefix: 'Veliu\RateManu\Infra\Doctrine\Entity'
+                alias: VeliuRateManu
             App:
                 type: attribute
                 is_bundle: false

@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Veliu\RateManu\Domain\User\Command\ConfirmUserRegistration;
 
-#[Route(path: '/confirm-registration', methods: ['POST', 'GET'], format: 'application/json')]
+#[Route(path: '/confirm-registration', methods: ['POST', 'GET'], format: 'json')]
 final readonly class ConfirmUserRegistrationAction
 {
     public function __construct(
