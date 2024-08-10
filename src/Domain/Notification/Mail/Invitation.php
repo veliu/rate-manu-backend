@@ -20,7 +20,7 @@ final readonly class Invitation
         $confirmationLink = sprintf('%s?token=%s', 'https://localhost/api/authentication/confirm-registration', $token);
 
         return (new Email())
-        ->from('hello@ratemanu.com')
+        ->from('noreply@veliu.net')
         ->to($to->value)
         ->subject(sprintf('Do wurdest von %s eingeladen', $invitedByUser->email->value))
         ->text(sprintf('Bitte bestätigen Sie ihre Einladung und Registrierung! %s', $confirmationLink));

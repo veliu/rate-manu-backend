@@ -18,7 +18,7 @@ final readonly class RegistrationConfirmation
         $confirmationLink = sprintf('%s?token=%s', 'https://localhost/api/authentication/confirm-registration', $token);
 
         return (new Email())
-        ->from('hello@ratemanu.com')
+        ->from('noreply@veliu.net')
         ->to($to->value)
         ->subject('Confirm your registration')
         ->text(sprintf('Bitte bestätigen Sie ihre Registrierung! %s', $confirmationLink));
