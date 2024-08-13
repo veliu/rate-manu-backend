@@ -9,7 +9,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
 use Veliu\RateManu\Domain\Food\Food;
+use Veliu\RateManu\Domain\Food\FoodCollection;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
+use Veliu\RateManu\Domain\SearchCriteria;
 
 /**
  * @extends ServiceEntityRepository<Food>
@@ -39,5 +41,12 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
     {
         $this->getEntityManager()->persist($food);
         $this->getEntityManager()->flush();
+    }
+
+    public function search(SearchCriteria $searchCriteria): FoodCollection
+    {
+        $results = $this->findAll();
+
+        return new FoodCollection($results);
     }
 }

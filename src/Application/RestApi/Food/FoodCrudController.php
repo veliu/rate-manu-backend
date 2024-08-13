@@ -10,9 +10,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
+use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
 use Veliu\RateManu\Domain\Group\Group;
+use Veliu\RateManu\Domain\SearchCriteria;
 use Veliu\RateManu\Domain\User\User;
 
 use function Psl\Type\instance_of;
@@ -23,6 +25,16 @@ final readonly class FoodCrudController
         private MessageBusInterface $messageBus,
         private FoodRepositoryInterface $foodRepository,
     ) {
+    }
+
+    #[Route(path: '/', methods: ['GET'], format: 'json')]
+    public function search(): JsonResponse
+    {
+        return new JsonResponse(
+            FoodCollectionResponse::fromDomainCollection(
+                $this->foodRepository->search(new SearchCriteria())
+            )
+        );
     }
 
     #[Route(path: '/', methods: ['POST'], format: 'json')]
