@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\User\Handler;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\Command\RegisterUser;
 use Veliu\RateManu\Domain\User\Event\UserRegistered;
 use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\User;
-use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
 use function Psl\Type\non_empty_string;
 
@@ -20,9 +21,9 @@ use function Psl\Type\non_empty_string;
 final readonly class RegisterUserHandler
 {
     public function __construct(
-        private UserRepositoryInterface $users,
         private EventDispatcherInterface $eventDispatcher,
         private UserPasswordHasherInterface $passwordHasher,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -37,7 +38,13 @@ final readonly class RegisterUserHandler
             $user->setPassword(non_empty_string()->coerce($hashedPassword));
         }
 
-        $this->users->create($user);
+        $group = new Group(Uuid::v4(), 'Veliu');
+        $group->addMember($user);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->persist($group);
+        $this->entityManager->flush();
+
         $this->eventDispatcher->dispatch(new UserRegistered($user->id));
     }
 }

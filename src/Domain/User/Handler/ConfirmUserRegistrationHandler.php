@@ -8,8 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Uid\Uuid;
-use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\Command\ConfirmUserRegistration;
 use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
@@ -38,11 +36,7 @@ final readonly class ConfirmUserRegistrationHandler
 
         $user->activate();
 
-        $group = new Group(Uuid::v4(), 'Veliu');
-        $group->addMember($user);
-
         $this->entityManager->persist($user);
-        $this->entityManager->persist($group);
         $this->entityManager->flush();
     }
 }
