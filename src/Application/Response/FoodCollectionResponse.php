@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\Response;
 
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Attributes as OA;
 use Veliu\RateManu\Domain\Food\FoodCollection;
 
 final readonly class FoodCollectionResponse
 {
     /**
-     * @phpstan-param list<FoodResponse> $foods
+     * @phpstan-param list<FoodResponse> $items
      */
     private function __construct(
+        #[OA\Property(type: 'integer')]
         public int $count,
-        public array $foods,
+        #[OA\Property(type: 'array', items: new OA\Items(ref: new Model(type: FoodResponse::class)))]
+        public array $items,
     ) {
     }
 

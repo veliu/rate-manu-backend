@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\RestApi\Food;
 
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -19,6 +21,7 @@ use Veliu\RateManu\Domain\User\User;
 
 use function Psl\Type\instance_of;
 
+#[OA\Tag('Food')]
 final readonly class FoodCrudController
 {
     public function __construct(
@@ -28,6 +31,11 @@ final readonly class FoodCrudController
     }
 
     #[Route(path: '/', methods: ['GET'], format: 'json')]
+    #[OA\Response(
+        response: 200,
+        description: 'Returns food search result',
+        content: new Model(type: FoodCollectionResponse::class)
+    )]
     public function search(): JsonResponse
     {
         return new JsonResponse(

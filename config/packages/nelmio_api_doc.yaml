@@ -1,13 +1,16 @@
 nelmio_api_doc:
+    models: { use_jms: false }
     documentation:
         info:
             title: RateManu
+            description: API documentation
             version: 1.0.0
         components:
             securitySchemes:
                 Bearer:
                     type: http
                     scheme: bearer
+                    bearerFormat: JWT
         security:
             - Bearer: [ ]
     areas: # to filter documented areas
