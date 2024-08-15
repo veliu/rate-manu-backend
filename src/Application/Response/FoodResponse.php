@@ -28,6 +28,8 @@ final readonly class FoodResponse
         public string $createdAt,
         #[OA\Property(type: 'string', format: 'date-time')]
         public string $updatedAt,
+        #[OA\Property(type: 'string', format: 'url', nullable: true)]
+        public string $image,
     ) {
     }
 
@@ -41,6 +43,7 @@ final readonly class FoodResponse
             $entity->group->id,
             non_empty_string()->coerce($entity->getCreatedAt()?->format(\DateTime::ATOM)),
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
+            $entity->getImage(),
         );
     }
 }

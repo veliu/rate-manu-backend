@@ -1,4 +1,6 @@
 parameters:
+    appUrl: '%env(string:APP_URL)%'
+    env(APP_URL): 'https://localhost'
 
 services:
     _defaults:

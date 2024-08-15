@@ -6,11 +6,13 @@ namespace Veliu\RateManu\Application\RestApi\Food;
 
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
 use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;

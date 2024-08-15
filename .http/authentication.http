@@ -1,4 +1,4 @@
-POST https://localhost/api/authentication/register?XDEBUG_SESSION=PHPSTORM
+POST http://localhost/api/authentication/register
 Content-Type: application/json
 Accept: application/json
 

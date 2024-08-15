@@ -46,9 +46,23 @@ class Food
 
         #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'food', cascade: ['remove'])]
         public Collection $ratings = new ArrayCollection(),
+
+        #[ORM\Column(nullable: true)]
+        private ?string $image = null,
     ) {
         $now = new \DateTime('now');
         $this->createdAt = $now;
         $this->updatedAt = $now;
     }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): void
+    {
+        $this->image = $image;
+    }
+
 }

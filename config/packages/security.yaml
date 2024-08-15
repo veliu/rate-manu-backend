@@ -27,6 +27,7 @@ security:
                 check_path: /api/token/refresh
 
     access_control:
+        - { path: ^/api/food, roles: PUBLIC_ACCESS }
         - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/authentication/confirm-registration, roles: PUBLIC_ACCESS }
