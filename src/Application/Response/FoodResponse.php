@@ -29,7 +29,7 @@ final readonly class FoodResponse
         #[OA\Property(type: 'string', format: 'date-time')]
         public string $updatedAt,
         #[OA\Property(type: 'string', format: 'url', nullable: true)]
-        public string $image,
+        public ?string $image,
     ) {
     }
 
