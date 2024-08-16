@@ -6,13 +6,12 @@ namespace Veliu\RateManu\Application\RestApi\Food;
 
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
 use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
@@ -30,6 +29,21 @@ final readonly class FoodCrudController
         private MessageBusInterface $messageBus,
         private FoodRepositoryInterface $foodRepository,
     ) {
+    }
+
+    #[Route(path: '/{id}', methods: ['GET'])]
+    #[OA\Response(
+        response: 200,
+        description: 'Returns food',
+        content: new Model(type: FoodResponse::class)
+    )]
+    public function get(Uuid $id): JsonResponse
+    {
+        return new JsonResponse(
+            FoodResponse::fromEntity(
+                $this->foodRepository->get($id)
+            )
+        );
     }
 
     #[Route(path: '/', methods: ['GET'], format: 'json')]

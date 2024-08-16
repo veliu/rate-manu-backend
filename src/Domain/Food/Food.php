@@ -64,5 +64,4 @@ class Food
     {
         $this->image = $image;
     }
-
 }
