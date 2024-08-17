@@ -15,6 +15,7 @@ use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
 use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
+use Veliu\RateManu\Domain\Food\Command\DeleteFood;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\SearchCriteria;
@@ -53,7 +54,7 @@ final readonly class FoodCrudController
     #[OA\Response(response: 404, description: 'Food does not exist')]
     public function delete(Uuid $id): JsonResponse
     {
-        $this->foodRepository->delete($id);
+        $this->messageBus->dispatch(new DeleteFood($id));
 
         return new JsonResponse(null, 204);
     }

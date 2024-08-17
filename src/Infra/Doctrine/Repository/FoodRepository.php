@@ -37,9 +37,8 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
         return $result;
     }
 
-    public function delete(Uuid $uuid): void
+    public function delete(Food $food): void
     {
-        $food = $this->get($uuid);
         $this->getEntityManager()->remove($food);
         $this->getEntityManager()->flush();
     }
