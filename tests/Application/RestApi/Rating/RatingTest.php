@@ -7,7 +7,10 @@ namespace Veliu\RateManu\Tests\Application\RestApi\Rating;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 
+use function PHPUnit\Framework\assertEquals;
 use function Psl\Json\decode;
+use function Psl\Type\int;
+use function Psl\Type\shape;
 
 final class RatingTest extends ApplicationTestCase
 {
@@ -26,7 +29,9 @@ final class RatingTest extends ApplicationTestCase
             ]
         );
 
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        $response = $client->getResponse();
+
+        self::assertEquals(200, $response->getStatusCode());
 
         $client->jsonRequest(
             method: 'POST',
@@ -37,6 +42,37 @@ final class RatingTest extends ApplicationTestCase
             ]
         );
 
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        $response = $client->getResponse();
+        self::assertEquals(200, $response->getStatusCode());
+
+        $client->jsonRequest(
+            method: 'POST',
+            uri: '/api/food-rating/',
+            parameters: [
+                'food' => $foodId->toString(),
+                'rating' => 5,
+            ]
+        );
+
+        $response = $client->getResponse();
+
+        self::assertEquals(200, $response->getStatusCode());
+
+        $client->jsonRequest(
+            method: 'GET',
+            uri: '/api/food/'.$foodId->toString(),
+        );
+
+        $response = $client->getResponse();
+        self::assertEquals(200, $response->getStatusCode());
+        self::assertIsString($response->getContent());
+        self::assertJson($response->getContent());
+        $data = decode($response->getContent());
+
+        self::assertTrue(shape([
+            'averageRating' => int(),
+        ], true)->matches($data));
+
+        assertEquals(5, $data['averageRating'] ?? null);
     }
 }

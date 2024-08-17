@@ -53,8 +53,9 @@ final class FoodTest extends ApplicationTestCase
         self::assertEquals('TK Pizza', $data['name']);
         self::assertNull($data['description']);
         self::assertEquals($foodId->toString(), $data['id']);
-        self::assertTrue(Uuid::isValid($data['author'] ?? ''));
-        self::assertTrue(Uuid::isValid($data['group'] ?? ''));
+        self::assertTrue(Uuid::isValid($data['author']));
+        self::assertTrue(Uuid::isValid($data['group']));
+        self::assertEquals(0, $data['averageRating']);
 
         $projectDir = non_empty_string()->coerce($this->getContainer()->getParameter('kernel.project_dir'));
 

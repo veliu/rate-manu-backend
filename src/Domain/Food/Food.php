@@ -67,7 +67,17 @@ class Food
 
     public function getAverageRating(): int
     {
-        $ratings[] = $this->ratings->map(fn (Rating $rating) => $rating->getRating());
+        $ratings = [];
+
+        foreach ($this->ratings as $rating) {
+            $ratings[] = $rating->getRating();
+        }
+
+        $count = count($ratings);
+
+        if (0 === $count) {
+            return 0;
+        }
 
         return (int) round(array_sum($ratings) / count($ratings));
     }
