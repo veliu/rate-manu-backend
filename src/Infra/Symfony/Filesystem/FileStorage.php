@@ -40,9 +40,9 @@ final readonly class FileStorage implements FileStorageInterface
     {
         $filesystem = new Filesystem();
 
-        $absolutePath = $this->projectDirectory.self::FOOD_IMAGE_PATH.$file;
+        $absolutePath = $this->projectDirectory.$file;
 
-        if (!$filesystem->exists($absolutePath)) {
+        if ($filesystem->exists($absolutePath)) {
             $filesystem->remove($absolutePath);
         }
     }
