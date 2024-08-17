@@ -19,7 +19,6 @@ final readonly class UpdateImageHandler
         private SluggerInterface $slugger,
         private EntityManagerInterface $entityManager,
         #[Autowire('%kernel.project_dir%/public/uploads/food')] private string $foodImageDirectory,
-        #[Autowire('%appUrl%')] private string $appUrl,
     ) {
     }
 
@@ -31,8 +30,7 @@ final readonly class UpdateImageHandler
         $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFileName);
         $newFilename = sprintf(
-            '%s/uploads/food/%s-%s.%s',
-            $this->appUrl,
+            '/uploads/food/%s-%s.%s',
             $safeFilename,
             uniqid(),
             $image->guessExtension()

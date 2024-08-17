@@ -33,7 +33,7 @@ final readonly class FoodResponse
     ) {
     }
 
-    public static function fromEntity(Entity $entity): self
+    public static function fromEntity(Entity $entity, string $domain = 'https://api.ratemanu.com/'): self
     {
         return new self(
             $entity->id,
@@ -43,7 +43,7 @@ final readonly class FoodResponse
             $entity->group->id,
             non_empty_string()->coerce($entity->getCreatedAt()?->format(\DateTime::ATOM)),
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
-            $entity->getImage(),
+            $domain.$entity->getImage(),
         );
     }
 }

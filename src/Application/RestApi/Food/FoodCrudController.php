@@ -6,6 +6,7 @@ namespace Veliu\RateManu\Application\RestApi\Food;
 
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -30,6 +31,7 @@ final readonly class FoodCrudController
     public function __construct(
         private MessageBusInterface $messageBus,
         private FoodRepositoryInterface $foodRepository,
+        #[Autowire('%appUrl%')] private string $appUrl,
     ) {
     }
 
@@ -44,7 +46,8 @@ final readonly class FoodCrudController
     {
         return new JsonResponse(
             FoodResponse::fromEntity(
-                $this->foodRepository->get($id)
+                $this->foodRepository->get($id),
+                $this->appUrl,
             )
         );
     }
@@ -69,7 +72,8 @@ final readonly class FoodCrudController
     {
         return new JsonResponse(
             FoodCollectionResponse::fromDomainCollection(
-                $this->foodRepository->search(new SearchCriteria())
+                $this->foodRepository->search(new SearchCriteria()),
+                $this->appUrl,
             )
         );
     }
@@ -97,6 +101,6 @@ final readonly class FoodCrudController
 
         $food = $this->foodRepository->get($command->uuid);
 
-        return new JsonResponse(FoodResponse::fromEntity($food), 200);
+        return new JsonResponse(FoodResponse::fromEntity($food, $this->appUrl), 200);
     }
 }
