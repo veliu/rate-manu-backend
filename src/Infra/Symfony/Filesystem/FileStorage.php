@@ -12,11 +12,11 @@ use Veliu\RateManu\Domain\File\FileStorageInterface;
 
 final readonly class FileStorage implements FileStorageInterface
 {
-    private const string FOOD_IMAGE_PATH = '/public/uploads/food/';
+    private const string FOOD_IMAGE_PATH = '/uploads/food/';
 
     public function __construct(
         private SluggerInterface $slugger,
-        #[Autowire('%kernel.project_dir%')] private string $projectDirectory,
+        #[Autowire('%kernel.project_dir%/public')] private string $projectDirectory,
     ) {
     }
 
@@ -33,7 +33,7 @@ final readonly class FileStorage implements FileStorageInterface
 
         $file->move($this->projectDirectory.self::FOOD_IMAGE_PATH, $newFilename);
 
-        return $newFilename;
+        return self::FOOD_IMAGE_PATH.$newFilename;
     }
 
     public function deleteFile(string $file): void
