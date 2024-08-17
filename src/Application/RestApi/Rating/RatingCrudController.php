@@ -13,8 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
-use Veliu\RateManu\Application\Request\CreateRatingRequest;
-use Veliu\RateManu\Application\Request\UpdateRatingRequest;
+use Veliu\RateManu\Application\Request\UpsertRatingRequest;
 use Veliu\RateManu\Application\Response\RatingResponse;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
@@ -24,6 +23,7 @@ use Veliu\RateManu\Domain\User\User;
 use function Psl\Type\instance_of;
 
 #[OA\Tag('Food Rating')]
+#[Route(name: 'food-rating')]
 final readonly class RatingCrudController
 {
     public function __construct(
@@ -58,12 +58,12 @@ final readonly class RatingCrudController
 
     #[OA\Response(
         response: 200,
-        description: 'Returns the created food rating',
+        description: 'Updates a food rating',
         content: new Model(type: RatingResponse::class)
     )]
-    #[Route(path: '/', name: '_create', methods: ['POST'], format: 'json')]
-    public function create(
-        #[MapRequestPayload(acceptFormat: 'json')] CreateRatingRequest $requestPayload,
+    #[Route(path: '/', name: '_upsert', methods: ['POST'], format: 'json')]
+    public function upsert(
+        #[MapRequestPayload(acceptFormat: 'json')] UpsertRatingRequest $requestPayload,
         UserInterface $user,
     ): JsonResponse {
         $domainUser = instance_of(User::class)->coerce($user);
@@ -71,23 +71,9 @@ final readonly class RatingCrudController
 
         $this->messageBus->dispatch($command);
 
-        $rating = $this->ratingRepository->get($command->id);
+        $food = $this->foodRepository->get($command->foodId);
 
-        return new JsonResponse(RatingResponse::fromEntity($rating), 200);
-    }
-
-    #[Route(path: '/{id}', methods: ['PUT'], format: 'json')]
-    public function update(
-        #[MapRequestPayload(acceptFormat: 'json')] UpdateRatingRequest $requestPayload,
-        Uuid $id,
-        UserInterface $user,
-    ): JsonResponse {
-        $domainUser = instance_of(User::class)->coerce($user);
-        $command = $requestPayload->toDomainCommand($domainUser, $id);
-
-        $this->messageBus->dispatch($command);
-
-        $rating = $this->ratingRepository->get($command->id);
+        $rating = $this->ratingRepository->getByUserAndFood($domainUser, $food);
 
         return new JsonResponse(RatingResponse::fromEntity($rating), 200);
     }

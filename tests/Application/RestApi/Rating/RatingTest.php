@@ -65,7 +65,7 @@ final class RatingTest extends ApplicationTestCase
         self::assertEquals($foodId->toString(), $responseBody['food']);
     }
 
-    public function testUpdate(): void
+    public function testUpsert(): void
     {
         $client = $this->createAuthenticatedClient();
 
@@ -82,35 +82,15 @@ final class RatingTest extends ApplicationTestCase
 
         self::assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $ratingId = Uuid::v4();
-
         $client->jsonRequest(
             method: 'POST',
             uri: '/api/food-rating/',
             parameters: [
-                'id' => $ratingId->toString(),
                 'food' => $foodId->toString(),
                 'rating' => 5,
             ]
         );
 
         self::assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $client->jsonRequest(
-            method: 'PUT',
-            uri: '/api/food-rating/'.$ratingId->toString(),
-            parameters: [
-                'rating' => 1,
-            ]
-        );
-
-        $jsonResponse = $client->getResponse()->getContent();
-        self::assertIsString($jsonResponse);
-        self::assertJson($jsonResponse);
-        $response = decode($jsonResponse);
-        self::assertIsArray($response);
-
-        self::assertArrayHasKey('rating', $response);
-        self::assertEquals(1, $response['rating']);
     }
 }
