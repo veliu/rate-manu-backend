@@ -13,6 +13,7 @@ use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Infra\Doctrine\Repository\RatingRepository;
 
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
+#[ORM\UniqueConstraint(name: 'food_rating_user', columns: ['user_id', 'food_id'])]
 class Rating
 {
     use TimestampableEntity;
