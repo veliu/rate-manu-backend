@@ -13,6 +13,9 @@ services:
     Veliu\RateManu\Infra\Symfony\EventListener\:
         resource: '../src/Infra/Symfony/EventListener'
 
+    Veliu\RateManu\Infra\Symfony\Filesystem\FileStorage: ~
+    Veliu\RateManu\Domain\File\FileStorageInterface: '@Veliu\RateManu\Infra\Symfony\Filesystem\FileStorage'
+
     Veliu\RateManu\Domain\User\Handler\:
         resource: '../src/Domain/User/Handler'
 
