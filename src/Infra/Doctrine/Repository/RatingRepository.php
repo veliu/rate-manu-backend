@@ -39,7 +39,7 @@ final class RatingRepository extends ServiceEntityRepository implements RatingRe
 
     public function getByUserAndFood(User $user, Food $food): Rating
     {
-        if (!$result = $this->findOneBy(['user' => $user, 'food' => $food])) {
+        if (!$result = $this->findOneBy(['createdBy' => $user, 'food' => $food])) {
             throw new NotFoundException(sprintf('No rating exists for user "%s" and food "%s"', $user->id->toString(), $food->id->toString()));
         }
 
