@@ -19,9 +19,9 @@ rest_food:
   type: attribute
   prefix: /api/food/
 
-rest_rating:
+rest_food-rating:
   resource:
     path: ../src/Application/RestApi/Rating/
     namespace: Veliu\RateManu\Application\RestApi\Rating
   type: attribute
-  prefix: /api/rating/
+  prefix: /api/food-rating/

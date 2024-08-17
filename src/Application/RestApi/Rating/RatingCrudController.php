@@ -24,7 +24,6 @@ use Veliu\RateManu\Domain\User\User;
 use function Psl\Type\instance_of;
 
 #[OA\Tag('Food Rating')]
-#[Route(name: 'food-rating')]
 final readonly class RatingCrudController
 {
     public function __construct(

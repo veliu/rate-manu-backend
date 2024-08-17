@@ -30,7 +30,7 @@ final class RatingTest extends ApplicationTestCase
 
         $client->jsonRequest(
             method: 'POST',
-            uri: '/api/rating/',
+            uri: '/api/food-rating/',
             parameters: [
                 'food' => $foodId->toString(),
                 'rating' => 5,
@@ -86,7 +86,7 @@ final class RatingTest extends ApplicationTestCase
 
         $client->jsonRequest(
             method: 'POST',
-            uri: '/api/rating/',
+            uri: '/api/food-rating/',
             parameters: [
                 'id' => $ratingId->toString(),
                 'food' => $foodId->toString(),
@@ -98,7 +98,7 @@ final class RatingTest extends ApplicationTestCase
 
         $client->jsonRequest(
             method: 'PUT',
-            uri: '/api/rating/'.$ratingId->toString(),
+            uri: '/api/food-rating/'.$ratingId->toString(),
             parameters: [
                 'rating' => 1,
             ]
