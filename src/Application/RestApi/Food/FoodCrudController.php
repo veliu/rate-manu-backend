@@ -46,6 +46,19 @@ final readonly class FoodCrudController
         );
     }
 
+    #[Route(path: '/{id}', methods: ['DELETE'])]
+    #[OA\Response(
+        response: 204,
+        description: 'Food deleted',
+        content: new Model(type: FoodResponse::class)
+    )]
+    public function delete(Uuid $id): JsonResponse
+    {
+        $this->foodRepository->delete($id);
+
+        return new JsonResponse(null, 204);
+    }
+
     #[Route(path: '/', methods: ['GET'], format: 'json')]
     #[OA\Response(
         response: 200,

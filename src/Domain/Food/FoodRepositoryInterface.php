@@ -13,6 +13,9 @@ interface FoodRepositoryInterface
     /** @throws NotFoundException */
     public function get(Uuid $uuid): Food;
 
+    /** @throws NotFoundException */
+    public function delete(Uuid $uuid): void;
+
     public function create(Food $food): void;
 
     public function search(SearchCriteria $searchCriteria): FoodCollection;
