@@ -64,4 +64,11 @@ class Food
     {
         $this->image = $image;
     }
+
+    public function getAverageRating(): int
+    {
+        $ratings[] = $this->ratings->map(fn (Rating $rating) => $rating->getRating());
+
+        return (int) round(array_sum($ratings) / count($ratings));
+    }
 }

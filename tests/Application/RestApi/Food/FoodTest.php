@@ -10,6 +10,7 @@ use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 
 use function PHPUnit\Framework\assertEquals;
 use function Psl\Json\decode;
+use function Psl\Type\int;
 use function Psl\Type\non_empty_string;
 use function Psl\Type\nullable;
 use function Psl\Type\shape;
@@ -46,6 +47,7 @@ final class FoodTest extends ApplicationTestCase
             'createdAt' => non_empty_string(),
             'updatedAt' => non_empty_string(),
             'image' => nullable(non_empty_string()),
+            'averageRating' => int(),
         ])->matches($data));
 
         self::assertEquals('TK Pizza', $data['name']);

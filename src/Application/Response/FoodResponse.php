@@ -30,6 +30,8 @@ final readonly class FoodResponse
         public string $updatedAt,
         #[OA\Property(type: 'string', format: 'url', nullable: true)]
         public ?string $image,
+        #[OA\Property(type: 'int', enum: [1, 2, 3, 4, 5, 6])]
+        public int $averageRating,
     ) {
     }
 
@@ -44,6 +46,7 @@ final readonly class FoodResponse
             non_empty_string()->coerce($entity->getCreatedAt()?->format(\DateTime::ATOM)),
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
             $domain.$entity->getImage(),
+            $entity->getAverageRating(),
         );
     }
 }
