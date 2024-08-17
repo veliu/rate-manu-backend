@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\RestApi\User;
 
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -13,6 +14,7 @@ use Veliu\RateManu\Application\ValueResolver\EmailAddressValueResolver;
 use Veliu\RateManu\Domain\User\Command\InviteUser;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
+#[OA\Tag('User')]
 #[Route(path: '/invite/{emailAddress}', methods: ['POST'], format: 'json')]
 final readonly class InviteUserAction
 {

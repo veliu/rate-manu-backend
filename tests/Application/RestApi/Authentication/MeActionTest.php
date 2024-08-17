@@ -21,7 +21,7 @@ final class MeActionTest extends ApplicationTestCase
         $userEmail = 'dummy@exmaple.test';
         $client = self::createAuthenticatedClient($userEmail, 'superSECRET1!');
 
-        $client->jsonRequest('GET', '/api/authentication/me');
+        $client->jsonRequest('GET', '/api/user/me');
 
         $response = $client->getResponse()->getContent();
 

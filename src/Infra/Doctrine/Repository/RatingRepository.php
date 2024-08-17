@@ -8,8 +8,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
+use Veliu\RateManu\Domain\Food\Food;
 use Veliu\RateManu\Domain\Rating\Rating;
 use Veliu\RateManu\Domain\Rating\RatingRepositoryInterface;
+use Veliu\RateManu\Domain\User\User;
 
 /**
  * @extends ServiceEntityRepository<Rating>
@@ -30,6 +32,15 @@ final class RatingRepository extends ServiceEntityRepository implements RatingRe
     {
         if (!$result = $this->find($uuid)) {
             throw new NotFoundException(sprintf('Rating with ID "%s" not found', $uuid->toString()));
+        }
+
+        return $result;
+    }
+
+    public function getByUserAndFood(User $user, Food $food): Rating
+    {
+        if (!$result = $this->findOneBy(['user' => $user, 'food' => $food])) {
+            throw new NotFoundException(sprintf('No rating exists for user "%s" and food "%s"', $user->id->toString(), $food->id->toString()));
         }
 
         return $result;
