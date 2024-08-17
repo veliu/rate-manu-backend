@@ -23,6 +23,7 @@ use Veliu\RateManu\Domain\User\User;
 use function Psl\Type\instance_of;
 
 #[OA\Tag('Food')]
+#[Route(name: 'food')]
 final readonly class FoodCrudController
 {
     public function __construct(
@@ -31,12 +32,13 @@ final readonly class FoodCrudController
     ) {
     }
 
-    #[Route(path: '/{id}', methods: ['GET'])]
+    #[Route(path: '/{id}', name: '_read', methods: ['GET'])]
     #[OA\Response(
         response: 200,
         description: 'Returns food',
         content: new Model(type: FoodResponse::class)
     )]
+    #[OA\Response(response: 404, description: 'Food does not exist')]
     public function get(Uuid $id): JsonResponse
     {
         return new JsonResponse(
@@ -46,12 +48,9 @@ final readonly class FoodCrudController
         );
     }
 
-    #[Route(path: '/{id}', methods: ['DELETE'])]
-    #[OA\Response(
-        response: 204,
-        description: 'Food deleted',
-        content: new Model(type: FoodResponse::class)
-    )]
+    #[Route(path: '/{id}', name: '_delete', methods: ['DELETE'])]
+    #[OA\Response(response: 204, description: 'Food deleted')]
+    #[OA\Response(response: 404, description: 'Food does not exist')]
     public function delete(Uuid $id): JsonResponse
     {
         $this->foodRepository->delete($id);
@@ -59,7 +58,7 @@ final readonly class FoodCrudController
         return new JsonResponse(null, 204);
     }
 
-    #[Route(path: '/', methods: ['GET'], format: 'json')]
+    #[Route(path: '/', name: '_search', methods: ['GET'], format: 'json')]
     #[OA\Response(
         response: 200,
         description: 'Returns food search result',
@@ -74,7 +73,16 @@ final readonly class FoodCrudController
         );
     }
 
-    #[Route(path: '/', methods: ['POST'], format: 'json')]
+    #[Route(path: '/', name: '_create', methods: ['POST'], format: 'json')]
+    #[OA\Response(
+        response: 200,
+        description: 'Returns food',
+        content: new Model(type: FoodResponse::class)
+    )]
+    #[OA\Response(
+        response: 422,
+        description: 'Validation Error',
+    )]
     public function create(
         #[MapRequestPayload(acceptFormat: 'json')] CreateFoodRequest $requestPayload,
         UserInterface $user,
