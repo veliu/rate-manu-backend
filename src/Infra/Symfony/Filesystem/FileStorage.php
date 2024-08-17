@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Infra\Symfony\Filesystem;
 
-use DEPTRAC_INTERNAL\Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
