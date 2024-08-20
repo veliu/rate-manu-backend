@@ -98,6 +98,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->roles;
     }
 
+    /**
+     * @psalm-return list<Role>
+     *
+     * @return Role[]
+     */
+    public function getRoleList(): array
+    {
+        return array_map(fn (string $roleString) => Role::from($roleString), $this->roles);
+    }
+
     public function eraseCredentials(): void
     {
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\RestApi\User;
 
+use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,6 +22,11 @@ final readonly class MeAction
     ) {
     }
 
+    #[OA\Response(
+        response: 200,
+        description: 'Updates a food rating',
+        content: new Model(type: UserResponse::class)
+    )]
     public function __invoke(UserInterface $authenticatedUser): JsonResponse
     {
         $user = $this->userRepository->getByEmail(
