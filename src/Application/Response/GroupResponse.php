@@ -14,7 +14,7 @@ final readonly class GroupResponse
      * @param UserResponse[] $members
      */
     public function __construct(
-        public Uuid $uuid,
+        public Uuid $id,
         public string $name,
         public array $members,
     ) {

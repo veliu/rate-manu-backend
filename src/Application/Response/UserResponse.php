@@ -22,7 +22,7 @@ final readonly class UserResponse
      * @param Uuid[] $groups
      */
     public function __construct(
-        public Uuid $uuid,
+        public Uuid $id,
         #[OA\Property(format: 'email')]
         public string $email,
         public Status $status,

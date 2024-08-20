@@ -30,15 +30,15 @@ final class MeActionTest extends ApplicationTestCase
         $body = decode($response);
 
         self::assertTrue(shape([
-            'uuid' => non_empty_string(),
+            'id' => non_empty_string(),
             'email' => non_empty_string(),
             'status' => non_empty_string(),
             'groups' => non_empty_vec(non_empty_string()),
         ])->matches($body));
 
-        self::assertIsString($body['uuid']);
-        self::assertNotEmpty($body['uuid']);
-        self::assertTrue(Uuid::isValid($body['uuid']));
+        self::assertIsString($body['id']);
+        self::assertNotEmpty($body['id']);
+        self::assertTrue(Uuid::isValid($body['id']));
         self::assertEquals($userEmail, $body['email']);
         self::assertEquals(Status::ACTIVE->value, $body['status']);
         self::assertIsArray($body['groups']);
