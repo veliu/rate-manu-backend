@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Veliu\RateManu\Tests\Application\RestApi\Authentication;
 
 use Symfony\Component\Uid\Uuid;
-use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\Status;
 use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 
@@ -34,7 +33,6 @@ final class MeActionTest extends ApplicationTestCase
             'uuid' => non_empty_string(),
             'email' => non_empty_string(),
             'status' => non_empty_string(),
-            'roles' => non_empty_vec(non_empty_string()),
             'groups' => non_empty_vec(non_empty_string()),
         ])->matches($body));
 
@@ -43,7 +41,6 @@ final class MeActionTest extends ApplicationTestCase
         self::assertTrue(Uuid::isValid($body['uuid']));
         self::assertEquals($userEmail, $body['email']);
         self::assertEquals(Status::ACTIVE->value, $body['status']);
-        self::assertEquals([Role::OWNER->value], $body['roles']);
         self::assertIsArray($body['groups']);
         self::assertNotEmpty($body['groups']);
 

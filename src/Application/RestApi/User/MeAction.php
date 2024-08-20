@@ -14,7 +14,7 @@ use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 #[OA\Tag('User')]
-#[Route(path: '/me', methods: ['GET'], format: 'json')]
+#[Route(path: '/me', name: 'me', methods: ['GET'], format: 'json')]
 final readonly class MeAction
 {
     public function __construct(
