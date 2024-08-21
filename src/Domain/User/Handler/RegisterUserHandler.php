@@ -29,7 +29,7 @@ final readonly class RegisterUserHandler
 
     public function __invoke(RegisterUser $command): void
     {
-        $user = new User(Uuid::v4(), $command->email, null, [Role::OWNER]);
+        $user = new User(Uuid::v4(), $command->email, ['user'], null);
 
         $password = $command->password;
 
@@ -38,8 +38,8 @@ final readonly class RegisterUserHandler
             $user->setPassword(non_empty_string()->coerce($hashedPassword));
         }
 
-        $group = new Group(Uuid::v4(), 'Veliu');
-        $group->addMember($user);
+        $group = new Group(Uuid::v4(), 'First Group');
+        $user->createGroupRelation($group, Role::OWNER);
 
         $this->entityManager->persist($user);
         $this->entityManager->persist($group);

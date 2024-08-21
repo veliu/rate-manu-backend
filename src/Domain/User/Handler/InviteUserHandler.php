@@ -11,7 +11,6 @@ use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\Command\InviteUser;
 use Veliu\RateManu\Domain\User\Event\UserInvited;
 use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
-use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
@@ -34,7 +33,7 @@ final readonly class InviteUserHandler
             $invitationToUser = new User(
                 id: Uuid::v4(),
                 email: $command->invitationTo,
-                roles: [Role::MEMBER]
+                roles: ['user']
             );
         }
         $invitationFromUser = $this->userRepository->getByEmail($command->invitationFrom);

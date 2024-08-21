@@ -6,7 +6,7 @@ namespace Veliu\RateManu\Application\Response;
 
 use OpenApi\Attributes as OA;
 use Symfony\Component\Uid\Uuid;
-use Veliu\RateManu\Domain\Group\Group;
+use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\Status;
 use Veliu\RateManu\Domain\User\User as UserEntity;
 
@@ -33,8 +33,8 @@ final readonly class UserResponse
     public static function fromEntity(UserEntity $entity): self
     {
         $groupIds = array_values(array_map(
-            static fn (Group $group) => $group->id,
-            $entity->getGroups()->toArray()
+            static fn (GroupRelation $group) => $group->group->id,
+            $entity->getGroupRelations()->toArray()
         ));
 
         $groupIds = non_empty_vec(instance_of(Uuid::class))->coerce($groupIds);
