@@ -60,6 +60,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->status;
     }
 
+    public function setStatus(Status $status): void
+    {
+        $this->status = $status;
+    }
+
     public function activate(): void
     {
         $this->status = Status::ACTIVE;

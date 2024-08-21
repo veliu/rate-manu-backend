@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\Notification\Handler;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Veliu\RateManu\Domain\Exception\MailNotSend;
 use Veliu\RateManu\Domain\Notification\Command\SendRegistrationConfirmationNotification;
-use Veliu\RateManu\Domain\Notification\Mail\RegistrationConfirmation;
+use Veliu\RateManu\Domain\Notification\Mail\RegistrationConfirmationMail;
 use Veliu\RateManu\Domain\User\Status;
 use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
@@ -20,7 +20,7 @@ final readonly class SendRegistrationConfirmationNotificationHandler
     public function __construct(
         private UserRepositoryInterface $userRepository,
         private MailerInterface $mailer,
-        private JWTEncoderInterface $encoder,
+        private JWTTokenManagerInterface $encoder,
     ) {
     }
 
@@ -32,11 +32,9 @@ final readonly class SendRegistrationConfirmationNotificationHandler
             return;
         }
 
-        $token = $this->encoder->encode([
-            'username' => $user->email->value,
-        ]);
+        $token = $this->encoder->createFromPayload($user, ['register_confirm' => 'register_confirm']);
 
-        $email = RegistrationConfirmation::create($user->email, $token);
+        $email = RegistrationConfirmationMail::create($user->email, $token);
 
         try {
             $this->mailer->send($email);

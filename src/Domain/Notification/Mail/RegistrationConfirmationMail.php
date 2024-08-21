@@ -7,7 +7,7 @@ namespace Veliu\RateManu\Domain\Notification\Mail;
 use Symfony\Component\Mime\Email;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
-final readonly class RegistrationConfirmation
+final readonly class RegistrationConfirmationMail
 {
     private function __construct()
     {
@@ -15,7 +15,7 @@ final readonly class RegistrationConfirmation
 
     public static function create(EmailAddress $to, string $token): Email
     {
-        $confirmationLink = sprintf('%s?token=%s', 'https://localhost/api/authentication/confirm-registration', $token);
+        $confirmationLink = sprintf('%s?token=%s', 'https://www.ratemanu.com/confirm-registration', $token);
 
         return (new Email())
         ->from('noreply@veliu.net')
