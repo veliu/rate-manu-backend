@@ -51,11 +51,12 @@ final class RegisterActionTest extends WebTestCase
 
         $client->jsonRequest(
             method: 'POST',
-            uri: '/api/authentication/confirm-registration?token='.$token,
+            uri: '/api/authentication/confirm-registration',
+            parameters: ['token' => $token],
         );
 
         $response = $client->getResponse();
-        assertEquals(204, $response->getStatusCode());
+        assertEquals(200, $response->getStatusCode());
 
         $client->jsonRequest(method: 'POST', uri: '/api/login_check', parameters: [
             'username' => $user,
