@@ -49,6 +49,6 @@ final readonly class ConfirmUserRegistrationAction
         $this->entityManager->persist($domainUser);
         $this->entityManager->flush();
 
-        return new JsonResponse(['token' => $this->tokenManager->create($domainUser)], 200);
+        return new JsonResponse(null, 204);
     }
 }

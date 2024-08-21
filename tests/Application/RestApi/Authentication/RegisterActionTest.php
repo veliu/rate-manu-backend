@@ -56,7 +56,7 @@ final class RegisterActionTest extends WebTestCase
         );
 
         $response = $client->getResponse();
-        assertEquals(200, $response->getStatusCode());
+        assertEquals(204, $response->getStatusCode());
 
         $client->jsonRequest(method: 'POST', uri: '/api/login_check', parameters: [
             'username' => $user,

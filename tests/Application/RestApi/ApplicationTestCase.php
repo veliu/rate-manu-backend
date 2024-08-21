@@ -35,7 +35,8 @@ class ApplicationTestCase extends WebTestCase
 
         $client->jsonRequest(
             method: 'POST',
-            uri: '/api/authentication/confirm-registration?token='.$token,
+            uri: '/api/authentication/confirm-registration',
+            parameters: ['token' => $token]
         );
 
         assertEquals(204, $client->getResponse()->getStatusCode());
