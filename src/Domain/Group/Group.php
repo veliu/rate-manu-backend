@@ -13,7 +13,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\User\GroupRelation;
-use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Infra\Doctrine\Repository\GroupRepository;
 
@@ -52,39 +51,5 @@ class Group
     public function getUsers(): Collection
     {
         return $this->users;
-    }
-
-    public function addMember(User $user): void
-    {
-        $user->addToGroup($this);
-        $this->users->set($user->id->toString(), $user);
-    }
-
-    public function removeMember(User $user): void
-    {
-        $user->removeFromGroup($this);
-        $this->users->remove($user->id->toString());
-    }
-
-    public function createUserRelation(User $user, Role $role): void
-    {
-        $this->userGroups->add(new GroupRelation($user, $this, $role));
-    }
-
-    public function removeUserRelation(User $user): void
-    {
-        foreach ($this->userGroups as $userRelation) {
-            if ($userRelation->user->id->equals($user->id)) {
-                $this->userGroups->remove($userRelation);
-
-                return;
-            }
-        }
-    }
-
-    /** @return Collection<int, GroupRelation> */
-    public function getGroupRelations(): Collection
-    {
-        return $this->userGroups;
     }
 }

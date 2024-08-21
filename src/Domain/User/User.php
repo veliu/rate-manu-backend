@@ -120,22 +120,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email->value;
     }
 
-    /** @phpstan-return Collection<string, Group> */
-    public function getGroups(): Collection
-    {
-        return $this->groups;
-    }
-
-    public function addToGroup(Group $group): void
-    {
-        $this->groups->set($group->id->toString(), $group);
-    }
-
-    public function removeFromGroup(Group $group): void
-    {
-        $this->groups->remove($group->id->toString());
-    }
-
     public function createGroupRelation(Group $group, Role $role): void
     {
         $this->userGroups->add(new GroupRelation($this, $group, $role));
@@ -143,9 +127,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeGroupRelation(Group $group): void
     {
-        foreach ($this->userGroups as $groupRelation) {
+        foreach ($this->userGroups as $key => $groupRelation) {
             if ($groupRelation->group->id->equals($group->id)) {
-                $this->userGroups->remove($groupRelation);
+                $this->userGroups->remove($key);
 
                 return;
             }

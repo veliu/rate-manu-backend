@@ -18,8 +18,8 @@ use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\Command\DeleteFood;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
-use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\SearchCriteria;
+use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\User;
 
 use function Psl\Type\instance_of;
@@ -93,9 +93,9 @@ final readonly class FoodCrudController
         UserInterface $user,
     ): JsonResponse {
         $user = instance_of(User::class)->coerce($user);
-        $group = instance_of(Group::class)->coerce($user->getGroups()->first());
+        $groupRelation = instance_of(GroupRelation::class)->coerce($user->getGroupRelations()->first());
 
-        $command = $requestPayload->toDomainCommand($group, $user);
+        $command = $requestPayload->toDomainCommand($groupRelation->group, $user);
 
         $this->messageBus->dispatch($command);
 

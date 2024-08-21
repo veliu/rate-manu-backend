@@ -7,9 +7,9 @@ namespace Veliu\RateManu\Application\Response;
 use Doctrine\Common\Collections\Collection;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
-use Veliu\RateManu\Domain\Group\Group;
+use Veliu\RateManu\Domain\User\GroupRelation;
 
-final readonly class UserGroupCollectionResponse
+final readonly class UserGroupsResponse
 {
     /**
      * @phpstan-param list<GroupResponse> $items
@@ -22,7 +22,7 @@ final readonly class UserGroupCollectionResponse
     ) {
     }
 
-    /** @param Collection<string, Group> $collection */
+    /** @param Collection<int, GroupRelation> $collection */
     public static function fromDomainCollection(Collection $collection): self
     {
         $count = 0;
