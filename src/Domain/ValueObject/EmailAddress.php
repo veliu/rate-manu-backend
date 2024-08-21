@@ -52,4 +52,10 @@ final readonly class EmailAddress implements DataBaseType
     {
         return self::DATABASE_TYPE_NAME;
     }
+
+    /** @phpstan-return non-empty-string */
+    public function __toString(): string
+    {
+        return $this->value;
+    }
 }

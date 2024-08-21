@@ -7,26 +7,25 @@ namespace Veliu\RateManu\Domain\User\Handler;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Veliu\RateManu\Domain\User\Command\InviteUser;
-use Veliu\RateManu\Domain\User\Event\UserInvited;
+use Veliu\RateManu\Domain\Group\GroupRepositoryInterface;
+use Veliu\RateManu\Domain\User\Command\InviteUserToGroup;
+use Veliu\RateManu\Domain\User\Event\UserInvitedToGroup;
 use Veliu\RateManu\Domain\User\Exception\UserNotFoundException;
-use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\Role;
 use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 
-use function Psl\Type\instance_of;
-
 #[AsMessageHandler]
-final readonly class InviteUserHandler
+final readonly class InviteUserToGroupHandler
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
+        private GroupRepositoryInterface $groupRepository,
         private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
-    public function __invoke(InviteUser $command): void
+    public function __invoke(InviteUserToGroup $command): void
     {
         try {
             $invitationToUser = $this->userRepository->getByEmail($command->invitationTo);
@@ -37,14 +36,14 @@ final readonly class InviteUserHandler
                 roles: ['user']
             );
         }
-        $invitationFromUser = $this->userRepository->getByEmail($command->invitationFrom);
+        $invitationFromUser = $this->userRepository->get($command->invitedBy);
 
-        $group = instance_of(GroupRelation::class)->coerce($invitationFromUser->getGroupRelations()->first())->group;
+        $group = $this->groupRepository->get($command->group);
 
         $invitationToUser->createGroupRelation($group, Role::MEMBER);
 
         $this->userRepository->create($invitationToUser);
 
-        $this->eventDispatcher->dispatch(new UserInvited($invitationToUser->id, $invitationFromUser->id));
+        $this->eventDispatcher->dispatch(new UserInvitedToGroup($invitationToUser->id, $invitationFromUser->id, $command->group));
     }
 }

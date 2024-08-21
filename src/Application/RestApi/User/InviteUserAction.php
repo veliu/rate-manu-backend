@@ -6,16 +6,20 @@ namespace Veliu\RateManu\Application\RestApi\User;
 
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Attribute\ValueResolver;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Veliu\RateManu\Application\ValueResolver\EmailAddressValueResolver;
-use Veliu\RateManu\Domain\User\Command\InviteUser;
-use Veliu\RateManu\Domain\ValueObject\EmailAddress;
+use Veliu\RateManu\Application\Request\InviteUserRequest;
+use Veliu\RateManu\Domain\User\User;
+
+use function Psl\Type\instance_of;
 
 #[OA\Tag('User')]
-#[Route(path: '/invite/{emailAddress}', methods: ['POST'], format: 'json')]
+#[OA\Response(response: 204, description: 'User invited')]
+#[OA\Response(response: 422, description: 'Validation Error')]
+#[Route(path: '/invite', name: 'invite', methods: ['POST'], format: 'json')]
 final readonly class InviteUserAction
 {
     public function __construct(
@@ -24,10 +28,18 @@ final readonly class InviteUserAction
     }
 
     public function __invoke(
-        #[ValueResolver(EmailAddressValueResolver::class)] EmailAddress $emailAddress,
+        #[MapRequestPayload(acceptFormat: 'json')] InviteUserRequest $requestPayload,
         UserInterface $user,
     ): JsonResponse {
-        $this->messageBus->dispatch(new InviteUser($emailAddress, EmailAddress::fromAny($user->getUserIdentifier())));
+        $domainUser = instance_of(User::class)->coerce($user);
+
+        $command = $requestPayload->toDomainCommand($domainUser);
+
+        try {
+            $this->messageBus->dispatch($command);
+        } catch (HandlerFailedException $e) {
+            $e->getPrevious() ? throw $e->getPrevious() : throw $e;
+        }
 
         return new JsonResponse(null, 204);
     }

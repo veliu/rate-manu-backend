@@ -6,8 +6,10 @@ namespace Veliu\RateManu\Infra\Doctrine\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\Group\GroupRepositoryInterface;
+use Veliu\RateManu\Domain\User\Exception\GroupNotFoundException;
 
 /**
  * @extends ServiceEntityRepository<Group>
@@ -22,5 +24,16 @@ final class GroupRepository extends ServiceEntityRepository implements GroupRepo
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Group::class);
+    }
+
+    public function get(Uuid $uuid): Group
+    {
+        $group = $this->find($uuid);
+
+        if (null === $group) {
+            throw GroupNotFoundException::byUuid($uuid);
+        }
+
+        return $group;
     }
 }

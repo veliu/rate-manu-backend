@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\User\Command;
 
+use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
-final readonly class InviteUser
+final readonly class InviteUserToGroup
 {
     public function __construct(
         public EmailAddress $invitationTo,
-        public EmailAddress $invitationFrom,
+        public Uuid $invitedBy,
+        public Uuid $group
     ) {
     }
 }
