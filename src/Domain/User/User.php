@@ -7,8 +7,6 @@ namespace Veliu\RateManu\Domain\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -24,11 +22,6 @@ use Veliu\RateManu\Infra\Doctrine\Repository\UserRepository;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
-
-    /** @var Collection&ArrayCollection<string, Group> */
-    #[ManyToMany(targetEntity: Group::class, inversedBy: 'users', cascade: ['persist'])]
-    #[JoinTable(name: 'users_groups')]
-    private Collection $groups;
 
     /** @var Collection<int, GroupRelation> */
     #[OneToMany(targetEntity: GroupRelation::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
@@ -59,7 +52,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $now = new \DateTime('now');
         $this->createdAt = $now;
         $this->updatedAt = $now;
-        $this->groups = new ArrayCollection();
         $this->userGroups = new ArrayCollection();
     }
 
@@ -100,16 +92,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->roles;
     }
 
-    /**
-     * @psalm-return list<Role>
-     *
-     * @return Role[]
-     */
-    public function getRoleList(): array
-    {
-        return array_map(fn (string $roleString) => Role::from($roleString), $this->roles);
-    }
-
     public function eraseCredentials(): void
     {
     }
@@ -128,7 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeGroupRelation(Group $group): void
     {
         foreach ($this->userGroups as $key => $groupRelation) {
-            if ($groupRelation->group->id->equals($group->id)) {
+            if ($groupRelation->group->getId()->equals($group->getId())) {
                 $this->userGroups->remove($key);
 
                 return;

@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\Group;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\User\GroupRelation;
-use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Infra\Doctrine\Repository\GroupRepository;
 
 #[ORM\Table(name: 'app_group')]
@@ -21,10 +18,6 @@ use Veliu\RateManu\Infra\Doctrine\Repository\GroupRepository;
 class Group
 {
     use TimestampableEntity;
-
-    /** @var Collection<string, User> */
-    #[ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
-    private Collection $users;
 
     /** @var Collection<int, GroupRelation> */
     #[OneToMany(targetEntity: GroupRelation::class, mappedBy: 'group', cascade: ['persist', 'remove'])]
@@ -36,20 +29,29 @@ class Group
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(type: UuidType::NAME, unique: true)]
-        readonly public Uuid $id,
+        private Uuid $id,
 
         #[ORM\Column]
         public string $name,
     ) {
-        $this->users = new ArrayCollection();
         $now = new \DateTime('now');
         $this->createdAt = $now;
         $this->updatedAt = $now;
     }
 
-    /** @phpstan-return Collection<string, User> */
-    public function getUsers(): Collection
+    /** @phpstan-return Collection<int, GroupRelation> */
+    public function getUserRelations(): Collection
     {
-        return $this->users;
+        return $this->userGroups;
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function setId(Uuid $id): void
+    {
+        $this->id = $id;
     }
 }

@@ -6,14 +6,9 @@ parameters:
 			path: src/Application/Request/CreateFoodRequest.php
 
 		-
-			message: "#^Property Veliu\\\\RateManu\\\\Domain\\\\Group\\\\Group\\:\\:\\$userGroups is unused\\.$#"
+			message: "#^Property Veliu\\\\RateManu\\\\Domain\\\\Group\\\\Group\\:\\:\\$userGroups is never written, only read\\.$#"
 			count: 1
 			path: src/Domain/Group/Group.php
-
-		-
-			message: "#^Property Veliu\\\\RateManu\\\\Domain\\\\User\\\\User\\:\\:\\$groups is never read, only written\\.$#"
-			count: 1
-			path: src/Domain/User/User.php
 
 		-
 			message: "#^Cannot access offset 'path' on array\\{scheme\\?\\: string, host\\?\\: string, port\\?\\: int\\<0, 65535\\>, user\\?\\: string, pass\\?\\: string, path\\?\\: string, query\\?\\: string, fragment\\?\\: string\\}\\|false\\.$#"

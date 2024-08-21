@@ -33,7 +33,7 @@ final readonly class UserResponse
     public static function fromEntity(UserEntity $entity): self
     {
         $groupIds = array_values(array_map(
-            static fn (GroupRelation $group) => $group->group->id,
+            static fn (GroupRelation $group) => $group->group->getId(),
             $entity->getGroupRelations()->toArray()
         ));
 

@@ -42,7 +42,7 @@ final readonly class FoodResponse
             $entity->name,
             $entity->description,
             $entity->author->id,
-            $entity->group->id,
+            $entity->group->getId(),
             non_empty_string()->coerce($entity->getCreatedAt()?->format(\DateTime::ATOM)),
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
             $domain.$entity->getImage(),
