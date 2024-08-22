@@ -63,9 +63,7 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
     {
         $qb = $this->createQueryBuilder('food');
 
-        $qb->select('food')
-            ->from(Food::class, 'food')
-            ->join(GroupRelation::class, 'rel', Join::WITH, 'food.group = rel.group')
+        $qb->join(GroupRelation::class, 'rel', Join::WITH, 'food.group = rel.group')
             ->where('rel.user = :userId')
             ->setParameter('userId', $user->id);
 
