@@ -17,7 +17,7 @@ use Veliu\RateManu\Domain\User\UserRepositoryInterface;
 use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 #[OA\Tag('Authentication')]
-#[Route(path: '/confirm-registration', methods: ['POST', 'GET'], format: 'json')]
+#[Route(path: '/confirm-registration', methods: ['POST'], format: 'json')]
 final readonly class ConfirmUserRegistrationAction
 {
     public function __construct(
