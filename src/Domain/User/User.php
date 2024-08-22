@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(type: UuidType::NAME, unique: true)]
-        readonly public Uuid $id,
+        public Uuid $id,
 
         #[ORM\Column(type: EmailAddress::DATABASE_TYPE_NAME, unique: true)]
         readonly public EmailAddress $email,
