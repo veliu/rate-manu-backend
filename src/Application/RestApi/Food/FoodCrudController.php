@@ -68,11 +68,13 @@ final readonly class FoodCrudController
         description: 'Returns food search result',
         content: new Model(type: FoodCollectionResponse::class)
     )]
-    public function search(): JsonResponse
+    public function search(UserInterface $securityUser): JsonResponse
     {
+        $user = instance_of(User::class)->coerce($securityUser);
+
         return new JsonResponse(
             FoodCollectionResponse::fromDomainCollection(
-                $this->foodRepository->search(new SearchCriteria()),
+                $this->foodRepository->findByUser($user),
                 $this->appUrl,
             )
         );

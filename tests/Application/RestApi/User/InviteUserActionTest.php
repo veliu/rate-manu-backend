@@ -57,7 +57,7 @@ final class InviteUserActionTest extends ApplicationTestCase
 
         $response = $client->getResponse();
 
-        self::assertEquals(404, $response->getStatusCode());
+        self::assertEquals(422, $response->getStatusCode());
     }
 
     public function testFailsUnauthenticated(): void

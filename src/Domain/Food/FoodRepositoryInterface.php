@@ -7,6 +7,7 @@ namespace Veliu\RateManu\Domain\Food;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
 use Veliu\RateManu\Domain\SearchCriteria;
+use Veliu\RateManu\Domain\User\User;
 
 interface FoodRepositoryInterface
 {
@@ -19,4 +20,5 @@ interface FoodRepositoryInterface
     public function create(Food $food): void;
 
     public function search(SearchCriteria $searchCriteria): FoodCollection;
+    public function findByUser(User $user): FoodCollection;
 }
