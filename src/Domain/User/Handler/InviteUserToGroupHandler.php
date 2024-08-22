@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\User\Handler;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -22,6 +23,7 @@ final readonly class InviteUserToGroupHandler
         private UserRepositoryInterface $userRepository,
         private GroupRepositoryInterface $groupRepository,
         private EventDispatcherInterface $eventDispatcher,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -42,7 +44,8 @@ final readonly class InviteUserToGroupHandler
 
         $invitationToUser->createGroupRelation($group, Role::MEMBER);
 
-        $this->userRepository->create($invitationToUser);
+        $this->entityManager->persist($invitationToUser);
+        $this->entityManager->flush();
 
         $this->eventDispatcher->dispatch(new UserInvitedToGroup($invitationToUser->id, $invitationFromUser->id, $command->group));
     }
