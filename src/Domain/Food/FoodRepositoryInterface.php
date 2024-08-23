@@ -20,5 +20,6 @@ interface FoodRepositoryInterface
     public function create(Food $food): void;
 
     public function search(SearchCriteria $searchCriteria): FoodCollection;
+
     public function findByUser(User $user): FoodCollection;
 }

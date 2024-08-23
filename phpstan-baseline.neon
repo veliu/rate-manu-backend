@@ -6,11 +6,26 @@ parameters:
 			path: src/Application/Request/CreateFoodRequest.php
 
 		-
+			message: "#^Property Veliu\\\\RateManu\\\\Domain\\\\Group\\\\Group\\:\\:\\$userGroups is never written, only read\\.$#"
+			count: 1
+			path: src/Domain/Group/Group.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of class Veliu\\\\RateManu\\\\Domain\\\\Food\\\\FoodCollection constructor expects iterable\\<string, Veliu\\\\RateManu\\\\Domain\\\\Food\\\\Food\\>, iterable given\\.$#"
+			count: 1
+			path: src/Infra/Doctrine/Repository/FoodRepository.php
+
+		-
+			message: "#^Binary operation \"\\.\" between '/api/food/' and array\\<int, array\\<string, int\\|string\\>\\>\\|int\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: tests/Application/RestApi/Food/FoodTest.php
+
+		-
 			message: "#^Cannot access offset 'path' on array\\{scheme\\?\\: string, host\\?\\: string, port\\?\\: int\\<0, 65535\\>, user\\?\\: string, pass\\?\\: string, path\\?\\: string, query\\?\\: string, fragment\\?\\: string\\}\\|false\\.$#"
 			count: 1
 			path: tests/Application/RestApi/Food/FoodTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uuid of static method Symfony\\\\Component\\\\Uid\\\\Uuid\\:\\:isValid\\(\\) expects string, int\\|string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$uuid of static method Symfony\\\\Component\\\\Uid\\\\Uuid\\:\\:isValid\\(\\) expects string, array\\<int, array\\<string, int\\|string\\>\\>\\|int\\|string\\|null given\\.$#"
 			count: 2
 			path: tests/Application/RestApi/Food/FoodTest.php

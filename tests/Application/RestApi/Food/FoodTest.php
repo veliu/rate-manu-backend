@@ -13,7 +13,9 @@ use function Psl\Json\decode;
 use function Psl\Type\int;
 use function Psl\Type\non_empty_string;
 use function Psl\Type\nullable;
+use function Psl\Type\positive_int;
 use function Psl\Type\shape;
+use function Psl\Type\vec;
 
 final class FoodTest extends ApplicationTestCase
 {
@@ -38,7 +40,7 @@ final class FoodTest extends ApplicationTestCase
         self::assertJson($response->getContent());
         $data = decode($response->getContent());
 
-        self::assertTrue(shape([
+        $foodResponseType = shape([
             'id' => non_empty_string(),
             'name' => non_empty_string(),
             'description' => nullable(non_empty_string()),
@@ -48,7 +50,17 @@ final class FoodTest extends ApplicationTestCase
             'updatedAt' => non_empty_string(),
             'image' => nullable(non_empty_string()),
             'averageRating' => int(),
-        ])->matches($data));
+            'ratings' => vec(shape([
+                'id' => non_empty_string(),
+                'food' => non_empty_string(),
+                'rating' => positive_int(),
+                'createdBy' => non_empty_string(),
+                'createdAt' => non_empty_string(),
+                'updatedAt' => non_empty_string(),
+            ])),
+        ]);
+
+        self::assertTrue($foodResponseType->matches($data));
 
         self::assertEquals('TK Pizza', $data['name']);
         self::assertNull($data['description']);

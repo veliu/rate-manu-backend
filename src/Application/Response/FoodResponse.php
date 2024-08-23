@@ -7,31 +7,41 @@ namespace Veliu\RateManu\Application\Response;
 use OpenApi\Attributes as OA;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Food\Food as Entity;
+use Veliu\RateManu\Domain\Rating\Rating;
 
 use function Psl\Type\non_empty_string;
 
-#[OA\Components]
 final readonly class FoodResponse
 {
+    /**
+     * @param RatingResponse[] $ratings
+     *
+     * @phpstan-param non-empty-string $name
+     * @phpstan-param non-empty-string|null $description
+     * @phpstan-param non-empty-string $createdAt
+     * @phpstan-param non-empty-string $updatedAt
+     * @phpstan-param non-empty-string|null $image
+     * @phpstan-param int<0,6> $averageRating
+     * @phpstan-param list<RatingResponse> $ratings
+     */
     public function __construct(
-        #[OA\Property(type: 'string', format: 'uuid')]
         public Uuid $id,
-        #[OA\Property(type: 'string')]
         public string $name,
-        #[OA\Property(type: 'string', nullable: true)]
         public ?string $description,
-        #[OA\Property(type: 'string', format: 'uuid')]
         public Uuid $author,
-        #[OA\Property(type: 'string', format: 'uuid')]
         public Uuid $group,
-        #[OA\Property(type: 'string', format: 'date-time')]
+        #[OA\Property(format: 'date-time')]
         public string $createdAt,
-        #[OA\Property(type: 'string', format: 'date-time')]
+        #[OA\Property(format: 'date-time')]
         public string $updatedAt,
-        #[OA\Property(type: 'string', format: 'url', nullable: true)]
+        #[OA\Property(
+            format: 'url',
+            example: 'https://api.ratemanu.com/uploads/food/123-image.jpeg'
+        )]
         public ?string $image,
-        #[OA\Property(type: 'int', enum: [1, 2, 3, 4, 5, 6])]
+        #[OA\Property(type: 'int', enum: [0, 1, 2, 3, 4, 5, 6])]
         public int $averageRating,
+        public array $ratings,
     ) {
     }
 
@@ -45,8 +55,9 @@ final readonly class FoodResponse
             $entity->group->getId(),
             non_empty_string()->coerce($entity->getCreatedAt()?->format(\DateTime::ATOM)),
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
-            $domain.$entity->getImage(),
+            $entity->getImage() ? $domain.$entity->getImage() : null,
             $entity->getAverageRating(),
+            array_filter(array_map(static fn (Rating $rating) => RatingResponse::fromEntity($rating), $entity->ratings->toArray()))
         );
     }
 }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Domain\Food;
 
-/** @phpstan-implements \IteratorAggregate<Food> */
+/** @implements \IteratorAggregate<string, Food> */
 final readonly class FoodCollection implements \IteratorAggregate
 {
     /** @param array<string, Food> $items */
     public function __construct(
-        private array $items = []
+        private iterable $items = []
     ) {
     }
 

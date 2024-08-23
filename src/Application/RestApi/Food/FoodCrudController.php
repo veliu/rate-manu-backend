@@ -18,7 +18,6 @@ use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\Command\DeleteFood;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
-use Veliu\RateManu\Domain\SearchCriteria;
 use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\User;
 

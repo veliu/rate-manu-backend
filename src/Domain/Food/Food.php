@@ -22,6 +22,7 @@ class Food
 
     /**
      * @phpstan-param non-empty-string $name
+     * @phpstan-param non-empty-string|null $description
      *
      * @param Collection<int, Rating> $ratings
      */
@@ -65,6 +66,7 @@ class Food
         $this->image = $image;
     }
 
+    /** @phpstan-return int<0,6> */
     public function getAverageRating(): int
     {
         $ratings = [];
@@ -79,6 +81,12 @@ class Food
             return 0;
         }
 
-        return (int) round(array_sum($ratings) / count($ratings));
+        $avgRating = (int) round(array_sum($ratings) / count($ratings));
+
+        if ($avgRating > 6 || $avgRating < 0) {
+            throw new \LogicException('Average rating is more than 6');
+        }
+
+        return $avgRating;
     }
 }

@@ -67,10 +67,6 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
             ->where('rel.user = :userId')
             ->setParameter('userId', $user->id);
 
-        $query = $qb->getQuery();
-
-        $results = $query->getResult();
-
-        return new FoodCollection($results);
+        return new FoodCollection($qb->getQuery()->toIterable());
     }
 }
