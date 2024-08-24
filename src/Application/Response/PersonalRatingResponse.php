@@ -17,6 +17,7 @@ final readonly class PersonalRatingResponse
         public Uuid $food,
         #[OA\Property(type: 'int', enum: [1, 2, 3, 4, 5, 6])]
         public int $rating,
+        public Uuid $createdBy,
         #[OA\Property(format: 'date-time')]
         public string $createdAt,
         #[OA\Property(format: 'date-time')]
@@ -30,6 +31,7 @@ final readonly class PersonalRatingResponse
             $entity->id,
             $entity->food->id,
             $entity->getRating(),
+            $entity->createdBy->id,
             non_empty_string()->coerce($entity->getCreatedAt()?->format(\DateTime::ATOM)),
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
         );
