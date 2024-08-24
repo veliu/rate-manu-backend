@@ -14,7 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\UpsertRatingRequest;
-use Veliu\RateManu\Application\Response\RatingResponse;
+use Veliu\RateManu\Application\Response\PersonalRatingResponse;
+use Veliu\RateManu\Application\Response\RatingCollectionResponse;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
 use Veliu\RateManu\Domain\Rating\RatingRepositoryInterface;
@@ -36,9 +37,9 @@ final readonly class RatingCrudController
     #[OA\Response(
         response: 200,
         description: 'Returns a personal food rating',
-        content: new Model(type: RatingResponse::class)
+        content: new Model(type: PersonalRatingResponse::class)
     )]
-    #[Route(path: '/{foodId}', name: '_personal-rating', methods: ['GET'], format: 'json')]
+    #[Route(path: '/my/{foodId}', name: '_personal-rating', methods: ['GET'], format: 'json')]
     public function getPersonalRating(
         Uuid $foodId,
         UserInterface $user,
@@ -53,13 +54,36 @@ final readonly class RatingCrudController
 
         $rating = $this->ratingRepository->getByUserAndFood($domainUser, $food);
 
-        return new JsonResponse(RatingResponse::fromEntity($rating), 200);
+        return new JsonResponse(PersonalRatingResponse::fromEntity($rating), 200);
+    }
+
+    #[OA\Response(
+        response: 200,
+        description: 'Returns ratings from all members',
+        content: new Model(type: PersonalRatingResponse::class)
+    )]
+    #[Route(path: '/{foodId}', name: '_ratings', methods: ['GET'], format: 'json')]
+    public function getRatings(
+        Uuid $foodId,
+        UserInterface $user,
+    ): JsonResponse {
+        $domainUser = instance_of(User::class)->coerce($user);
+
+        try {
+            $food = $this->foodRepository->get($foodId);
+        } catch (NotFoundException $e) {
+            throw new UnprocessableEntityHttpException('Food does not exist.', $e, 422);
+        }
+
+        $ratingCollection = $this->ratingRepository->findForAllMembers($domainUser, $food);
+
+        return new JsonResponse(RatingCollectionResponse::fromDomainCollection($ratingCollection), 200);
     }
 
     #[OA\Response(
         response: 200,
         description: 'Updates a food rating',
-        content: new Model(type: RatingResponse::class)
+        content: new Model(type: PersonalRatingResponse::class)
     )]
     #[Route(path: '/', name: '_upsert', methods: ['POST'], format: 'json')]
     public function upsert(
@@ -75,6 +99,6 @@ final readonly class RatingCrudController
 
         $rating = $this->ratingRepository->getByUserAndFood($domainUser, $food);
 
-        return new JsonResponse(RatingResponse::fromEntity($rating), 200);
+        return new JsonResponse(PersonalRatingResponse::fromEntity($rating), 200);
     }
 }

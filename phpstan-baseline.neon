@@ -16,6 +16,11 @@ parameters:
 			path: src/Infra/Doctrine/Repository/FoodRepository.php
 
 		-
+			message: "#^Parameter \\#1 \\$items of class Veliu\\\\RateManu\\\\Domain\\\\Rating\\\\RatingCollection constructor expects iterable\\<string, Veliu\\\\RateManu\\\\Domain\\\\Rating\\\\Rating\\>, iterable given\\.$#"
+			count: 1
+			path: src/Infra/Doctrine/Repository/RatingRepository.php
+
+		-
 			message: "#^Binary operation \"\\.\" between '/api/food/' and array\\<int, array\\<string, int\\|string\\>\\>\\|int\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: tests/Application/RestApi/Food/FoodTest.php

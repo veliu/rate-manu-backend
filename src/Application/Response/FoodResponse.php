@@ -14,7 +14,7 @@ use function Psl\Type\non_empty_string;
 final readonly class FoodResponse
 {
     /**
-     * @param RatingResponse[] $ratings
+     * @param PersonalRatingResponse[] $ratings
      *
      * @phpstan-param non-empty-string $name
      * @phpstan-param non-empty-string|null $description
@@ -22,7 +22,7 @@ final readonly class FoodResponse
      * @phpstan-param non-empty-string $updatedAt
      * @phpstan-param non-empty-string|null $image
      * @phpstan-param int<0,6> $averageRating
-     * @phpstan-param list<RatingResponse> $ratings
+     * @phpstan-param list<PersonalRatingResponse> $ratings
      */
     public function __construct(
         public Uuid $id,
@@ -57,7 +57,7 @@ final readonly class FoodResponse
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
             $entity->getImage() ? $domain.$entity->getImage() : null,
             $entity->getAverageRating(),
-            array_filter(array_map(static fn (Rating $rating) => RatingResponse::fromEntity($rating), $entity->ratings->toArray()))
+            array_filter(array_map(static fn (Rating $rating) => PersonalRatingResponse::fromEntity($rating), $entity->ratings->toArray()))
         );
     }
 }

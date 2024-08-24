@@ -17,5 +17,7 @@ interface RatingRepositoryInterface
     /** @throws NotFoundException */
     public function getByUserAndFood(User $user, Food $food): Rating;
 
+    public function findForAllMembers(User $user, Food $food): RatingCollection;
+
     public function save(Rating $rating): void;
 }

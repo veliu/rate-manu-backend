@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Veliu\RateManu\Infra\Doctrine\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
 use Veliu\RateManu\Domain\Food\Food;
 use Veliu\RateManu\Domain\Rating\Rating;
+use Veliu\RateManu\Domain\Rating\RatingCollection;
 use Veliu\RateManu\Domain\Rating\RatingRepositoryInterface;
+use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\User;
 
 /**
@@ -44,6 +47,21 @@ final class RatingRepository extends ServiceEntityRepository implements RatingRe
         }
 
         return $result;
+    }
+
+    public function findForAllMembers(User $user, Food $food): RatingCollection
+    {
+        $qb = $this->createQueryBuilder('rating');
+
+        $qb
+            ->join(Food::class, 'food', Join::WITH, 'food.id = rating.food')
+            ->join(GroupRelation::class, 'rel', Join::WITH, 'food.group = rel.group')
+            ->andWhere('rel.user = :userId')
+            ->andWhere('food.id = :foodId')
+            ->setParameter('userId', $user->id)
+            ->setParameter('foodId', $food->id);
+
+        return new RatingCollection($qb->getQuery()->toIterable());
     }
 
     public function save(Rating $rating): void
