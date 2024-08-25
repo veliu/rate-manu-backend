@@ -38,7 +38,7 @@ final readonly class UpdateImageAction
 
     public function __invoke(
         Uuid $id,
-        #[MapUploadedFile([new Assert\File(maxSize: '3000000', mimeTypes: ['image/png', 'image/jpeg'])])] UploadedFile $image,
+        #[MapUploadedFile([new Assert\File(maxSize: '10000000', mimeTypes: ['image/png', 'image/jpeg'])])] UploadedFile $image,
     ): JsonResponse {
         $this->messageBus->dispatch(new UpdateImage($id, $image));
 
