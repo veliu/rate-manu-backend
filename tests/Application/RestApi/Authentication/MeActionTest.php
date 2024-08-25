@@ -11,6 +11,7 @@ use Veliu\RateManu\Tests\Application\RestApi\ApplicationTestCase;
 use function Psl\Json\decode;
 use function Psl\Type\non_empty_string;
 use function Psl\Type\non_empty_vec;
+use function Psl\Type\nullable;
 use function Psl\Type\shape;
 
 final class MeActionTest extends ApplicationTestCase
@@ -34,6 +35,7 @@ final class MeActionTest extends ApplicationTestCase
             'email' => non_empty_string(),
             'status' => non_empty_string(),
             'groups' => non_empty_vec(non_empty_string()),
+            'name' => nullable(non_empty_string()),
         ])->matches($body));
 
         self::assertIsString($body['id']);

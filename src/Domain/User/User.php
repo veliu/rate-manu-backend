@@ -32,6 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @psalm-param non-empty-string|null $password
+     * @psalm-param non-empty-string|null $name
      */
     public function __construct(
         #[ORM\Id]
@@ -47,6 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         #[ORM\Column(type: 'string', nullable: true)]
         public ?string $password = null,
+
+        #[ORM\Column(type: 'string', nullable: true)]
+        public ?string $name = null,
     ) {
         $this->status = Status::PENDING_REGISTRATION;
         $now = new \DateTime('now');

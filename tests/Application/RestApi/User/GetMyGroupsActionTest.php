@@ -10,6 +10,7 @@ use function Psl\Json\decode;
 use function Psl\Type\literal_scalar;
 use function Psl\Type\non_empty_string;
 use function Psl\Type\non_empty_vec;
+use function Psl\Type\nullable;
 use function Psl\Type\shape;
 
 final class GetMyGroupsActionTest extends ApplicationTestCase
@@ -41,6 +42,7 @@ final class GetMyGroupsActionTest extends ApplicationTestCase
                     'id' => non_empty_string(),
                     'email' => literal_scalar($email),
                     'status' => literal_scalar('active'),
+                    'name' => nullable(non_empty_string()),
                 ])),
             ])),
         ]);

@@ -18,6 +18,7 @@ final readonly class UserResponse
     /**
      * @phpstan-param non-empty-string $email
      * @phpstan-param non-empty-list<Uuid> $groups
+     * @phpstan-param non-empty-string|null $name
      *
      * @param Uuid[] $groups
      */
@@ -27,6 +28,7 @@ final readonly class UserResponse
         public string $email,
         public Status $status,
         public array $groups,
+        public ?string $name,
     ) {
     }
 
@@ -39,6 +41,6 @@ final readonly class UserResponse
 
         $groupIds = non_empty_vec(instance_of(Uuid::class))->coerce($groupIds);
 
-        return new self($entity->id, $entity->email->value, $entity->getStatus(), $groupIds);
+        return new self($entity->id, $entity->email->value, $entity->getStatus(), $groupIds, $entity->name);
     }
 }

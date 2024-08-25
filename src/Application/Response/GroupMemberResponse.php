@@ -13,17 +13,19 @@ final readonly class GroupMemberResponse
 {
     /**
      * @phpstan-param non-empty-string $email
+     * @phpstan-param non-empty-string|null $name
      */
     public function __construct(
         public Uuid $id,
         #[OA\Property(format: 'email')]
         public string $email,
         public Status $status,
+        public ?string $name,
     ) {
     }
 
     public static function fromEntity(UserEntity $entity): self
     {
-        return new self($entity->id, $entity->email->value, $entity->getStatus());
+        return new self($entity->id, $entity->email->value, $entity->getStatus(), $entity->name);
     }
 }
