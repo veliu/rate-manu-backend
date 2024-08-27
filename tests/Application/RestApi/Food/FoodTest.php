@@ -40,6 +40,15 @@ final class FoodTest extends ApplicationTestCase
         self::assertJson($response->getContent());
         $data = decode($response->getContent());
 
+        $ratingResponseType = shape([
+            'id' => non_empty_string(),
+            'food' => non_empty_string(),
+            'rating' => positive_int(),
+            'createdBy' => non_empty_string(),
+            'createdAt' => non_empty_string(),
+            'updatedAt' => non_empty_string(),
+        ]);
+
         $foodResponseType = shape([
             'id' => non_empty_string(),
             'name' => non_empty_string(),
@@ -50,14 +59,8 @@ final class FoodTest extends ApplicationTestCase
             'updatedAt' => non_empty_string(),
             'image' => nullable(non_empty_string()),
             'averageRating' => int(),
-            'ratings' => vec(shape([
-                'id' => non_empty_string(),
-                'food' => non_empty_string(),
-                'rating' => positive_int(),
-                'createdBy' => non_empty_string(),
-                'createdAt' => non_empty_string(),
-                'updatedAt' => non_empty_string(),
-            ])),
+            'ratings' => vec($ratingResponseType),
+            'personalRating' => nullable($ratingResponseType),
         ]);
 
         self::assertTrue($foodResponseType->matches($data));

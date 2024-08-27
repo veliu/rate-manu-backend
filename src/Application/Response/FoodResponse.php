@@ -8,6 +8,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Food\Food as Entity;
 use Veliu\RateManu\Domain\Rating\Rating;
+use Veliu\RateManu\Domain\User\User;
 
 use function Psl\Type\non_empty_string;
 
@@ -42,11 +43,14 @@ final readonly class FoodResponse
         #[OA\Property(type: 'int', enum: [0, 1, 2, 3, 4, 5, 6])]
         public int $averageRating,
         public array $ratings,
+        public ?RatingResponse $personalRating = null,
     ) {
     }
 
-    public static function fromEntity(Entity $entity, string $domain = 'https://api.ratemanu.com/'): self
+    public static function fromEntity(Entity $entity, User $user, string $domain = 'https://api.ratemanu.com/'): self
     {
+        $personalRating = $entity->getRatingForUser($user);
+
         return new self(
             $entity->id,
             $entity->name,
@@ -57,7 +61,8 @@ final readonly class FoodResponse
             non_empty_string()->coerce($entity->getUpdatedAt()?->format(\DateTime::ATOM)),
             $entity->getImage() ? $domain.$entity->getImage() : null,
             $entity->getAverageRating(),
-            array_filter(array_map(static fn (Rating $rating) => $rating->id, $entity->ratings->toArray()))
+            array_filter(array_map(static fn (Rating $rating) => $rating->id, $entity->ratings->toArray())),
+            $personalRating ? RatingResponse::fromEntity($personalRating) : null,
         );
     }
 }

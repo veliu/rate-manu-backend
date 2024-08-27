@@ -10,11 +10,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\Command\UpdateImage;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
+use Veliu\RateManu\Domain\User\User;
+
+use function Psl\Type\instance_of;
 
 #[OA\Tag('Food')]
 #[OA\RequestBody(
@@ -39,12 +43,15 @@ final readonly class UpdateImageAction
     public function __invoke(
         Uuid $id,
         #[MapUploadedFile([new Assert\File(maxSize: '8388608', mimeTypes: ['image/png', 'image/jpeg'])])] UploadedFile $image,
+        UserInterface $authenticatedUser,
     ): JsonResponse {
+        $user = instance_of(User::class)->coerce($authenticatedUser);
+
         $this->messageBus->dispatch(new UpdateImage($id, $image));
 
         $food = $this->foodRepository->get($id);
 
-        $response = FoodResponse::fromEntity($food);
+        $response = FoodResponse::fromEntity($food, $user);
 
         return new JsonResponse($response, 200);
     }

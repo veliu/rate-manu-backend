@@ -89,4 +89,15 @@ class Food
 
         return $avgRating;
     }
+
+    public function getRatingForUser(User $user): ?Rating
+    {
+        foreach ($this->ratings as $rating) {
+            if ($rating->createdBy->id->equals($user->id)) {
+                return $rating;
+            }
+        }
+
+        return null;
+    }
 }

@@ -41,11 +41,14 @@ final readonly class FoodCrudController
         content: new Model(type: FoodResponse::class)
     )]
     #[OA\Response(response: 404, description: 'Food does not exist')]
-    public function get(Uuid $id): JsonResponse
+    public function get(Uuid $id, UserInterface $securityUser): JsonResponse
     {
+        $user = instance_of(User::class)->coerce($securityUser);
+
         return new JsonResponse(
             FoodResponse::fromEntity(
                 $this->foodRepository->get($id),
+                $user,
                 $this->appUrl,
             )
         );
@@ -74,6 +77,7 @@ final readonly class FoodCrudController
         return new JsonResponse(
             FoodCollectionResponse::fromDomainCollection(
                 $this->foodRepository->findByUser($user),
+                $user,
                 $this->appUrl,
             )
         );
@@ -102,6 +106,6 @@ final readonly class FoodCrudController
 
         $food = $this->foodRepository->get($command->uuid);
 
-        return new JsonResponse(FoodResponse::fromEntity($food, $this->appUrl), 200);
+        return new JsonResponse(FoodResponse::fromEntity($food, $user, $this->appUrl), 200);
     }
 }
