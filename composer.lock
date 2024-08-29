@@ -2074,16 +2074,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v4.29.1",
+            "version": "v4.29.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "fbb94ebc33116fd10a67579c6eb970ff3c3ec067"
+                "reference": "61a3f8bb95111fade6eace55c071c43da0cc75d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/fbb94ebc33116fd10a67579c6eb970ff3c3ec067",
-                "reference": "fbb94ebc33116fd10a67579c6eb970ff3c3ec067",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/61a3f8bb95111fade6eace55c071c43da0cc75d9",
+                "reference": "61a3f8bb95111fade6eace55c071c43da0cc75d9",
                 "shasum": ""
             },
             "require": {
@@ -2184,7 +2184,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.29.1"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.29.3"
             },
             "funding": [
                 {
@@ -2192,7 +2192,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-08T15:00:40+00:00"
+            "time": "2024-08-17T13:03:07+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -2680,16 +2680,16 @@
         },
         {
             "name": "psr/log",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
+                "reference": "79dff0b268932c640297f5208d6298f71855c03e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/79dff0b268932c640297f5208d6298f71855c03e",
+                "reference": "79dff0b268932c640297f5208d6298f71855c03e",
                 "shasum": ""
             },
             "require": {
@@ -2724,9 +2724,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.0"
+                "source": "https://github.com/php-fig/log/tree/3.0.1"
             },
-            "time": "2021-07-14T16:46:02+00:00"
+            "time": "2024-08-21T13:31:24+00:00"
         },
         {
             "name": "revolt/event-loop",
