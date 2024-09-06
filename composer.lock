@@ -8616,32 +8616,33 @@
         },
         {
             "name": "php-standard-library/phpstan-extension",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-standard-library/phpstan-extension.git",
-                "reference": "53601fe346aa90cbeaf9916f15eed46a3cb90ead"
+                "reference": "6a13576490fbeb406dcfba473d2277efda0575c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-standard-library/phpstan-extension/zipball/53601fe346aa90cbeaf9916f15eed46a3cb90ead",
-                "reference": "53601fe346aa90cbeaf9916f15eed46a3cb90ead",
+                "url": "https://api.github.com/repos/php-standard-library/phpstan-extension/zipball/6a13576490fbeb406dcfba473d2277efda0575c7",
+                "reference": "6a13576490fbeb406dcfba473d2277efda0575c7",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^1.7"
+                "phpstan/phpstan": "^1.12"
             },
             "conflict": {
-                "azjezz/psl": "<1.6||>=3.0"
+                "azjezz/psl": "<1.6||>=4.0"
             },
             "require-dev": {
-                "azjezz/psl": "^1.6||^2.0",
+                "azjezz/psl": "^1.6||^2.0||^3.0",
+                "composer/semver": "^3.3",
                 "nikic/php-parser": "^4.14.0",
                 "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.0",
-                "phpunit/phpunit": "^9.5"
+                "phpstan/phpstan-phpunit": "^1.4.0",
+                "phpstan/phpstan-strict-rules": "^1.6.0",
+                "phpunit/phpunit": "^9.6"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -8663,22 +8664,22 @@
             "description": "PHPStan PSL extension",
             "support": {
                 "issues": "https://github.com/php-standard-library/phpstan-extension/issues",
-                "source": "https://github.com/php-standard-library/phpstan-extension/tree/1.0.0"
+                "source": "https://github.com/php-standard-library/phpstan-extension/tree/1.1.0"
             },
-            "time": "2022-06-10T11:39:34+00:00"
+            "time": "2024-09-04T19:33:28+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.0",
+            "version": "1.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "384af967d35b2162f69526c7276acadce534d0e1"
+                "reference": "0ca1c7bb55fca8fe6448f16fff0f311ccec960a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/384af967d35b2162f69526c7276acadce534d0e1",
-                "reference": "384af967d35b2162f69526c7276acadce534d0e1",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0ca1c7bb55fca8fe6448f16fff0f311ccec960a1",
+                "reference": "0ca1c7bb55fca8fe6448f16fff0f311ccec960a1",
                 "shasum": ""
             },
             "require": {
@@ -8723,7 +8724,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-27T09:18:05+00:00"
+            "time": "2024-09-05T16:09:28+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
