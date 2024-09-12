@@ -25,3 +25,6 @@ rest_food-rating:
     namespace: Veliu\RateManu\Application\RestApi\Rating
   type: attribute
   prefix: /api/food-rating/
+
+api_token_invalidate:
+  path: /api/token/invalidate
