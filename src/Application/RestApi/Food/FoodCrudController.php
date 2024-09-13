@@ -8,16 +8,19 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
+use Veliu\RateManu\Application\Request\SearchQueryString;
 use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\Command\DeleteFood;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
+use Veliu\RateManu\Domain\SearchCriteria;
 use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\User;
 
@@ -64,26 +67,30 @@ final readonly class FoodCrudController
         return new JsonResponse(null, 204);
     }
 
-    #[Route(path: '/', name: '_search', methods: ['GET'], format: 'json')]
+    #[Route(name: '_search', methods: ['GET'], format: 'json')]
     #[OA\Response(
         response: 200,
         description: 'Returns food search result',
         content: new Model(type: FoodCollectionResponse::class)
     )]
-    public function search(UserInterface $securityUser): JsonResponse
-    {
+    public function search(
+        #[MapQueryString(validationFailedStatusCode: 422)] ?SearchQueryString $searchQueryString,
+        UserInterface $securityUser
+    ): JsonResponse {
         $user = instance_of(User::class)->coerce($securityUser);
+
+        $searchCriteria = $searchQueryString?->toSearchCriteria($user) ?? new SearchCriteria($user->id);
 
         return new JsonResponse(
             FoodCollectionResponse::fromDomainCollection(
-                $this->foodRepository->findByUser($user),
+                $this->foodRepository->search($searchCriteria),
                 $user,
                 $this->appUrl,
             )
         );
     }
 
-    #[Route(path: '/', name: '_create', methods: ['POST'], format: 'json')]
+    #[Route(name: '_create', methods: ['POST'], format: 'json')]
     #[OA\Response(
         response: 200,
         description: 'Returns food',

@@ -54,9 +54,19 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
 
     public function search(SearchCriteria $searchCriteria): FoodCollection
     {
-        $results = $this->findAll();
+        $entity = 'food';
 
-        return new FoodCollection($results);
+        $qb = $this->createQueryBuilder($entity);
+
+        $qb->join(GroupRelation::class, 'rel', Join::WITH, $entity.'.group = rel.group')
+            ->where('rel.user = :userId')
+            ->setParameter('userId', $searchCriteria->userId);
+
+        foreach ($searchCriteria->sorting as $sorting) {
+            $qb->addOrderBy(sprintf('%s.%s', $entity, $sorting->propertyName), $sorting->direction);
+        }
+
+        return new FoodCollection($qb->getQuery()->toIterable());
     }
 
     public function findByUser(User $user): FoodCollection

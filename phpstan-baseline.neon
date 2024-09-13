@@ -6,13 +6,18 @@ parameters:
 			path: src/Application/Request/CreateFoodRequest.php
 
 		-
+			message: "#^Method Veliu\\\\RateManu\\\\Application\\\\Request\\\\SearchQueryString\\:\\:__construct\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Application/Request/SearchQueryString.php
+
+		-
 			message: "#^Property Veliu\\\\RateManu\\\\Domain\\\\Group\\\\Group\\:\\:\\$userGroups is never written, only read\\.$#"
 			count: 1
 			path: src/Domain/Group/Group.php
 
 		-
 			message: "#^Parameter \\#1 \\$items of class Veliu\\\\RateManu\\\\Domain\\\\Food\\\\FoodCollection constructor expects iterable\\<string, Veliu\\\\RateManu\\\\Domain\\\\Food\\\\Food\\>, iterable given\\.$#"
-			count: 1
+			count: 2
 			path: src/Infra/Doctrine/Repository/FoodRepository.php
 
 		-
