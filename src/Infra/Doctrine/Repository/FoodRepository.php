@@ -12,6 +12,7 @@ use Veliu\RateManu\Domain\Exception\NotFoundException;
 use Veliu\RateManu\Domain\Food\Food;
 use Veliu\RateManu\Domain\Food\FoodCollection;
 use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
+use Veliu\RateManu\Domain\Rating\Rating;
 use Veliu\RateManu\Domain\SearchCriteria;
 use Veliu\RateManu\Domain\User\GroupRelation;
 use Veliu\RateManu\Domain\User\User;
@@ -63,6 +64,14 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
             ->setParameter('userId', $searchCriteria->userId);
 
         foreach ($searchCriteria->sorting as $sorting) {
+            if ('averageRating' === $sorting->propertyName) {
+                $qb
+                    ->join(Rating::class, 'r', Join::WITH, $entity.'.id = r.food')
+                    ->groupBy('food')
+                    ->having('AVG(r.rating) IS NOT NULL')
+                    ->orderBy('AVG(r.rating)', $sorting->direction);
+                continue;
+            }
             $qb->addOrderBy(sprintf('%s.%s', $entity, $sorting->propertyName), $sorting->direction);
         }
 
