@@ -15,12 +15,12 @@ use function Psl\Type\positive_int;
 final readonly class SearchQueryString
 {
     public function __construct(
-        #[Assert\Type('integer')]
+        #[Assert\Type('numeric')]
         #[Assert\Range(min: 0, max: 100)]
         #[OA\Property(type: 'number', default: 0, maximum: 100, minimum: 0)]
         public mixed $offset = 0,
 
-        #[Assert\Type('integer')]
+        #[Assert\Type('numeric')]
         #[Assert\Range(min: 0, max: 500)]
         #[OA\Property(type: 'number', default: 10, maximum: 500, minimum: 0)]
         public mixed $limit = 10,
@@ -45,8 +45,8 @@ final readonly class SearchQueryString
 
     public function toSearchCriteria(User $user): SearchCriteria
     {
-        $offset = $this->offset ?? 0;
-        $limit = $this->limit ?? 10;
+        $offset = (int) $this->offset ?? 0;
+        $limit = (int) $this->limit ?? 10;
         $sorting = [];
 
         foreach ($this->sorting as $sort) {
