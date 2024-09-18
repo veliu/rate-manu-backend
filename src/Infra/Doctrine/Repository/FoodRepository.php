@@ -67,7 +67,7 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
         foreach ($searchCriteria->sorting as $sorting) {
             if ('averageRating' === $sorting->propertyName) {
                 $qb
-                    ->join(Rating::class, 'r', Join::WITH, $entity.'.id = r.food')
+                    ->leftJoin(Rating::class, 'r', Join::WITH, $entity.'.id = r.food')
                     ->groupBy('food')
                     ->orderBy('AVG(r.rating)', $sorting->direction);
                 continue;
