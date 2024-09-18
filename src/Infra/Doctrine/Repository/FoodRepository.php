@@ -68,7 +68,6 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
                 $qb
                     ->join(Rating::class, 'r', Join::WITH, $entity.'.id = r.food')
                     ->groupBy('food')
-                    ->having('AVG(r.rating) IS NOT NULL')
                     ->orderBy('AVG(r.rating)', $sorting->direction);
                 continue;
             }
