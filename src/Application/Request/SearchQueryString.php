@@ -10,8 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Veliu\RateManu\Domain\SearchCriteria;
 use Veliu\RateManu\Domain\User\User;
 
+use function Psl\Type\int;
 use function Psl\Type\literal_scalar;
+use function Psl\Type\null;
+use function Psl\Type\numeric_string;
 use function Psl\Type\positive_int;
+use function Psl\Type\uint;
 use function Psl\Type\union;
 
 final readonly class SearchQueryString
@@ -47,8 +51,8 @@ final readonly class SearchQueryString
 
     public function toSearchCriteria(User $user): SearchCriteria
     {
-        $offset = (int) $this->offset ?? 0;
-        $limit = (int) $this->limit ?? 10;
+        $offset = (int) union(uint(), numeric_string())->coerce($this->offset);
+        $limit = (int) union(uint(), numeric_string())->coerce($this->limit);
         $sorting = [];
 
         foreach ($this->sorting as $sort) {
@@ -58,7 +62,7 @@ final readonly class SearchQueryString
         return new SearchCriteria(
             userId: $user->id,
             sorting: $sorting,
-            offset: union(positive_int(), literal_scalar(0))->coerce($offset),
+            offset: uint()->coerce($offset),
             limit: positive_int()->coerce($limit),
         );
     }

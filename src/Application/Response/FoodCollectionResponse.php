@@ -24,13 +24,11 @@ final readonly class FoodCollectionResponse
 
     public static function fromDomainCollection(FoodCollection $collection, User $user, string $domain = 'https://api.ratemanu.com/'): self
     {
-        $count = 0;
         $foodEntries = [];
         foreach ($collection as $item) {
             $foodEntries[] = FoodResponse::fromEntity($item, $user, $domain);
-            ++$count;
         }
 
-        return new self($count, $foodEntries);
+        return new self($collection->total, $foodEntries);
     }
 }

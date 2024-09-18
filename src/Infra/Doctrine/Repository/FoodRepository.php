@@ -6,6 +6,7 @@ namespace Veliu\RateManu\Infra\Doctrine\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
@@ -74,7 +75,16 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
             $qb->addOrderBy(sprintf('%s.%s', $entity, $sorting->propertyName), $sorting->direction);
         }
 
-        return new FoodCollection($qb->getQuery()->toIterable());
+        $query = $qb->getQuery();
+        $paginator = new Paginator($query);
+        $totalItems = count($paginator);
+
+        $paginator
+            ->getQuery()
+            ->setFirstResult($searchCriteria->offset)
+            ->setMaxResults($searchCriteria->limit);
+
+        return new FoodCollection($paginator->getIterator(), $totalItems);
     }
 
     public function findByUser(User $user): FoodCollection

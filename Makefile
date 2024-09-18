@@ -14,7 +14,7 @@ cs-fix:
 
 .PHONY: phpstan
 phpstan:
-	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/phpstan analyse
+	XDEBUG_MODE=off $(ON_CONTAINER) vendor/bin/phpstan --memory-limit=200000000 analyse
 
 .PHONY: phpstan-baseline
 phpstan-baseline:

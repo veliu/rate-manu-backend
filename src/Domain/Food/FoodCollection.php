@@ -9,7 +9,8 @@ final readonly class FoodCollection implements \IteratorAggregate
 {
     /** @param array<string, Food> $items */
     public function __construct(
-        private iterable $items = []
+        private iterable $items = [],
+        public int $total = 0,
     ) {
     }
 
