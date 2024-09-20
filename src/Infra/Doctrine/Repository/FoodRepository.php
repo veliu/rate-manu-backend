@@ -56,23 +56,32 @@ final class FoodRepository extends ServiceEntityRepository implements FoodReposi
 
     public function search(SearchCriteria $searchCriteria): FoodCollection
     {
-        $entity = 'food';
+        $foodEntity = 'food';
 
-        $qb = $this->createQueryBuilder($entity);
+        $qb = $this->createQueryBuilder($foodEntity);
 
-        $qb->join(GroupRelation::class, 'rel', Join::WITH, $entity.'.group = rel.group')
-            ->where('rel.user = :userId')
+        $ratingEntity = 'rating';
+        $groupRelationEntity = 'group_relation';
+
+        $qb->join(GroupRelation::class, $groupRelationEntity, Join::WITH, sprintf('%s.group = %s.group', $foodEntity, $groupRelationEntity))
+            ->where(sprintf('%s.user = :userId', $groupRelationEntity))
             ->setParameter('userId', $searchCriteria->userId);
 
         foreach ($searchCriteria->sorting as $sorting) {
             if ('averageRating' === $sorting->propertyName) {
                 $qb
-                    ->leftJoin(Rating::class, 'r', Join::WITH, $entity.'.id = r.food')
+                    ->leftJoin(Rating::class, $ratingEntity, Join::WITH, sprintf('%s.id = %s.food', $foodEntity, $ratingEntity))
                     ->groupBy('food')
-                    ->orderBy('AVG(r.rating)', $sorting->direction);
+                    ->orderBy(sprintf('AVG(%s.rating)', $ratingEntity), $sorting->direction);
                 continue;
             }
-            $qb->addOrderBy(sprintf('%s.%s', $entity, $sorting->propertyName), $sorting->direction);
+            $qb->addOrderBy(sprintf('%s.%s', $foodEntity, $sorting->propertyName), $sorting->direction);
+        }
+
+        foreach ($searchCriteria->filter as $filter) {
+            $parameter = sprintf(':%s', $filter->propertyName);
+            $qb->andWhere(sprintf('%s.%s %s %s', $filter->entity, $filter->propertyName, $filter->operator->value, $parameter));
+            $qb->setParameter($parameter, $filter->value);
         }
 
         $query = $qb->getQuery();

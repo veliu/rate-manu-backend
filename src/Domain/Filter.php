@@ -8,11 +8,12 @@ final readonly class Filter
 {
     /**
      * @phpstan-param non-empty-string $propertyName
-     * @phpstan-param non-empty-string|non-empty-list<'asc'|'desc'> $propertyValue
      */
     public function __construct(
+        public string $entity,
         public string $propertyName,
-        public string|array $propertyValue,
+        public FilterOperator $operator,
+        public string|int|bool $value,
     ) {
     }
 }

@@ -6,6 +6,11 @@ parameters:
 			path: src/Application/Request/CreateFoodRequest.php
 
 		-
+			message: "#^Method Veliu\\\\RateManu\\\\Application\\\\Request\\\\SearchQueryString\\:\\:__construct\\(\\) has parameter \\$filter with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Application/Request/SearchQueryString.php
+
+		-
 			message: "#^Method Veliu\\\\RateManu\\\\Application\\\\Request\\\\SearchQueryString\\:\\:__construct\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Application/Request/SearchQueryString.php
