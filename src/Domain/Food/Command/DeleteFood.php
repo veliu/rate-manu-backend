@@ -9,7 +9,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class DeleteFood
 {
     public function __construct(
-        public Uuid $id
+        public Uuid $id,
     ) {
     }
 }

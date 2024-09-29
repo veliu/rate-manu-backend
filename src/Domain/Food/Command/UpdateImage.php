@@ -11,7 +11,7 @@ final readonly class UpdateImage
 {
     public function __construct(
         public Uuid $foodId,
-        public UploadedFile $image
+        public UploadedFile $image,
     ) {
     }
 }

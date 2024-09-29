@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Veliu\RateManu\Domain\Comment\Comment;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\Rating\Rating;
 use Veliu\RateManu\Domain\User\User;
@@ -24,7 +25,8 @@ class Food
      * @phpstan-param non-empty-string $name
      * @phpstan-param non-empty-string|null $description
      *
-     * @param Collection<int, Rating> $ratings
+     * @param Collection<int, Rating>  $ratings
+     * @param Collection<int, Comment> $comments
      */
     public function __construct(
         #[ORM\Id]
@@ -50,6 +52,9 @@ class Food
 
         #[ORM\Column(nullable: true)]
         private ?string $image = null,
+
+        #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'food', cascade: ['remove'])]
+        public Collection $comments = new ArrayCollection(),
     ) {
         $now = new \DateTime('now');
         $this->createdAt = $now;

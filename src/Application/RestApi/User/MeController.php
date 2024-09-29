@@ -49,7 +49,7 @@ final readonly class MeController
     #[Route(name: '_put', methods: ['PUT'], format: 'json')]
     public function put(
         UserInterface $authenticatedUser,
-        #[MapRequestPayload] UpdateUserRequest $request
+        #[MapRequestPayload] UpdateUserRequest $request,
     ): JsonResponse {
         $user = instance_of(User::class)->coerce($authenticatedUser);
         $this->messageBus->dispatch($request->toDomainCommand($user));

@@ -12,7 +12,7 @@ final readonly class InviteUserToGroup
     public function __construct(
         public EmailAddress $invitationTo,
         public Uuid $invitedBy,
-        public Uuid $group
+        public Uuid $group,
     ) {
     }
 }

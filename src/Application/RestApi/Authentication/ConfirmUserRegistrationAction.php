@@ -28,7 +28,7 @@ final readonly class ConfirmUserRegistrationAction
     }
 
     public function __invoke(
-        #[MapRequestPayload] ConfirmUserRegistrationRequest $request
+        #[MapRequestPayload] ConfirmUserRegistrationRequest $request,
     ): JsonResponse {
         $token = $this->tokenManager->parse($request->getToken());
 

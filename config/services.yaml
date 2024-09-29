@@ -28,6 +28,9 @@ services:
     Veliu\RateManu\Domain\Rating\Handler\:
         resource: '../src/Domain/Rating/Handler'
 
+    Veliu\RateManu\Domain\Comment\Handler\:
+        resource: '../src/Domain/Comment/Handler'
+
     # Controller
     Veliu\RateManu\Application\RestApi\Authentication\:
         resource: '../src/Application/RestApi/Authentication'
@@ -45,7 +48,6 @@ services:
         resource: '../src/Application/RestApi/Rating'
         tags: [ 'controller.service_arguments' ]
 
-
     Veliu\RateManu\Application\ValueResolver\:
         resource: '../src/Application/ValueResolver'
         tags: [ 'controller.argument_value_resolver', 'controller.targeted_value_resolver' ]
@@ -54,5 +56,6 @@ services:
     Veliu\RateManu\Domain\Group\GroupRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\GroupRepository'
     Veliu\RateManu\Domain\Food\FoodRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\FoodRepository'
     Veliu\RateManu\Domain\Rating\RatingRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\RatingRepository'
+    Veliu\RateManu\Domain\Comment\CommentRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\CommentRepository'
 
     Veliu\RateManu\Application\RestApi\UserChecker: ~

@@ -25,7 +25,7 @@ use function Psl\Type\instance_of;
 final readonly class InviteUserAction
 {
     public function __construct(
-        private MessageBusInterface $messageBus
+        private MessageBusInterface $messageBus,
     ) {
     }
 

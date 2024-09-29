@@ -18,7 +18,7 @@ final readonly class EmailAddress implements DataBaseType
      * @psalm-param non-empty-string $value
      */
     private function __construct(
-        public string $value
+        public string $value,
     ) {
     }
 

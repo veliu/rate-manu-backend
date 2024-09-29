@@ -23,7 +23,7 @@ final readonly class RegisterUserAction
     }
 
     public function __invoke(
-        #[MapRequestPayload(acceptFormat: 'json')] RegisterUserRequest $registerUserRequest
+        #[MapRequestPayload(acceptFormat: 'json')] RegisterUserRequest $registerUserRequest,
     ): JsonResponse {
         $this->messageBus->dispatch($registerUserRequest->toDomainCommand());
 

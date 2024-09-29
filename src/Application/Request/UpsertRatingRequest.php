@@ -25,7 +25,7 @@ final readonly class UpsertRatingRequest
         #[Assert\Type('int')]
         #[Assert\Range(min: 1, max: 6)]
         #[Assert\NotNull]
-        public mixed $rating
+        public mixed $rating,
     ) {
     }
 

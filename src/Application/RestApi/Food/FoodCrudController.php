@@ -75,7 +75,7 @@ final readonly class FoodCrudController
     )]
     public function search(
         #[MapQueryString(validationFailedStatusCode: 422)] ?SearchQueryString $searchQueryString,
-        UserInterface $securityUser
+        UserInterface $securityUser,
     ): JsonResponse {
         $user = instance_of(User::class)->coerce($securityUser);
 

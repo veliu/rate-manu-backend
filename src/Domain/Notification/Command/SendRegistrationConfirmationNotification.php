@@ -9,7 +9,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class SendRegistrationConfirmationNotification
 {
     public function __construct(
-        public Uuid $userId
+        public Uuid $userId,
     ) {
     }
 }

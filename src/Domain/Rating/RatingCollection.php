@@ -9,7 +9,7 @@ final readonly class RatingCollection implements \IteratorAggregate
 {
     /** @param array<string, Rating> $items */
     public function __construct(
-        private iterable $items = []
+        private iterable $items = [],
     ) {
     }
 
