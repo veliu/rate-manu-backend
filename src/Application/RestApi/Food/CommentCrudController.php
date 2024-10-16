@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\CreateCommentRequest;
+use Veliu\RateManu\Application\Response\CommentCollectionResponse;
 use Veliu\RateManu\Application\Response\CommentResponse;
 use Veliu\RateManu\Domain\Comment\CommentRepositoryInterface;
 use Veliu\RateManu\Domain\User\User;
@@ -53,5 +54,23 @@ final readonly class CommentCrudController
         $comment = $this->commentRepository->get($command->id);
 
         return new JsonResponse(CommentResponse::fromEntity($comment), 200);
+    }
+
+    #[Route(path: '/{id}/comment', name: '_comment_get_all', methods: ['GET'], format: 'json')]
+    #[OA\Response(
+        response: 200,
+        description: 'Returns food',
+        content: new Model(type: CommentCollectionResponse::class)
+    )]
+    #[OA\Response(
+        response: 422,
+        description: 'Validation Error',
+    )]
+    public function getAll(
+        Uuid $id,
+    ): JsonResponse {
+        $comments = $this->commentRepository->getForFood($id);
+
+        return new JsonResponse(CommentCollectionResponse::fromDomainCollection($comments), 200);
     }
 }

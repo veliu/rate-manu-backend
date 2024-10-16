@@ -11,4 +11,6 @@ interface CommentRepositoryInterface
 {
     /** @throws NotFoundException */
     public function get(Uuid $id): Comment;
+
+    public function getForFood(Uuid $foodId): CommentCollection;
 }

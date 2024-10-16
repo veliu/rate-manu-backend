@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Comment\Comment;
+use Veliu\RateManu\Domain\Comment\CommentCollection;
 use Veliu\RateManu\Domain\Comment\CommentRepositoryInterface;
 use Veliu\RateManu\Domain\Exception\NotFoundException;
 
@@ -33,5 +34,12 @@ final class CommentRepository extends ServiceEntityRepository implements Comment
         }
 
         return $result;
+    }
+
+    public function getForFood(Uuid $foodId): CommentCollection
+    {
+        $result = $this->findBy(['food' => $foodId]);
+
+        return new CommentCollection($result, count($result));
     }
 }
