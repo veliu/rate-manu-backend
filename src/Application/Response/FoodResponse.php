@@ -6,6 +6,7 @@ namespace Veliu\RateManu\Application\Response;
 
 use OpenApi\Attributes as OA;
 use Symfony\Component\Uid\Uuid;
+use Veliu\RateManu\Domain\Comment\Comment;
 use Veliu\RateManu\Domain\Food\Food as Entity;
 use Veliu\RateManu\Domain\Rating\Rating;
 use Veliu\RateManu\Domain\User\User;
@@ -16,6 +17,7 @@ final readonly class FoodResponse
 {
     /**
      * @param Uuid[] $ratings
+     * @param Uuid[] $comments
      *
      * @phpstan-param non-empty-string $name
      * @phpstan-param non-empty-string|null $description
@@ -24,6 +26,7 @@ final readonly class FoodResponse
      * @phpstan-param non-empty-string|null $image
      * @phpstan-param int<0,6> $averageRating
      * @phpstan-param list<Uuid> $ratings
+     * @phpstan-param list<Uuid> $comments
      */
     public function __construct(
         public Uuid $id,
@@ -43,6 +46,7 @@ final readonly class FoodResponse
         #[OA\Property(type: 'int', enum: [0, 1, 2, 3, 4, 5, 6])]
         public int $averageRating,
         public array $ratings,
+        public array $comments,
         public ?RatingResponse $personalRating = null,
     ) {
     }
@@ -62,6 +66,7 @@ final readonly class FoodResponse
             $entity->getImage() ? $domain.$entity->getImage() : null,
             $entity->getAverageRating(),
             array_filter(array_map(static fn (Rating $rating) => $rating->id, $entity->ratings->toArray())),
+            array_filter(array_map(static fn (Comment $comment) => $comment->id, $entity->comments->toArray())),
             $personalRating ? RatingResponse::fromEntity($personalRating) : null,
         );
     }
