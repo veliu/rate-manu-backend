@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Application\Request\CreateFoodRequest;
 use Veliu\RateManu\Application\Request\SearchQueryString;
+use Veliu\RateManu\Application\Request\UpdateFoodRequest;
 use Veliu\RateManu\Application\Response\FoodCollectionResponse;
 use Veliu\RateManu\Application\Response\FoodResponse;
 use Veliu\RateManu\Domain\Food\Command\DeleteFood;
@@ -112,6 +113,34 @@ final readonly class FoodCrudController
         $this->messageBus->dispatch($command);
 
         $food = $this->foodRepository->get($command->uuid);
+
+        return new JsonResponse(FoodResponse::fromEntity($food, $user, $this->appUrl), 200);
+    }
+
+    #[Route(path: '/{id}', name: '_update', methods: ['PUT'], format: 'json')]
+    #[OA\Response(
+        response: 200,
+        description: 'Returns updated food',
+        content: new Model(type: FoodResponse::class)
+    )]
+    #[OA\Response(
+        response: 422,
+        description: 'Validation Error',
+    )]
+    public function update(
+        #[MapRequestPayload(acceptFormat: 'json')] UpdateFoodRequest $requestPayload,
+        UserInterface $user,
+        Uuid $id,
+    ): JsonResponse {
+        $entity = $this->foodRepository->get($id);
+
+        $user = instance_of(User::class)->coerce($user);
+
+        $command = $requestPayload->toDomainCommand($entity);
+
+        $this->messageBus->dispatch($command);
+
+        $food = $this->foodRepository->get($id);
 
         return new JsonResponse(FoodResponse::fromEntity($food, $user, $this->appUrl), 200);
     }

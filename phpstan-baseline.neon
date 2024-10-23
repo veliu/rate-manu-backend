@@ -16,6 +16,11 @@ parameters:
 			path: src/Application/Request/SearchQueryString.php
 
 		-
+			message: "#^Parameter \\#3 \\$description of class Veliu\\\\RateManu\\\\Domain\\\\Food\\\\Command\\\\UpdateFood constructor expects non\\-empty\\-string\\|null, string\\|null given\\.$#"
+			count: 1
+			path: src/Application/Request/UpdateFoodRequest.php
+
+		-
 			message: "#^Property Veliu\\\\RateManu\\\\Domain\\\\Group\\\\Group\\:\\:\\$userGroups is never written, only read\\.$#"
 			count: 1
 			path: src/Domain/Group/Group.php
