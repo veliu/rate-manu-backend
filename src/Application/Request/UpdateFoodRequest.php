@@ -10,9 +10,7 @@ use Veliu\RateManu\Domain\Food\Command\UpdateFood;
 use Veliu\RateManu\Domain\Food\Food;
 
 use function Psl\Type\non_empty_string;
-use function Psl\Type\null;
 use function Psl\Type\nullable;
-use function Psl\Type\union;
 
 final readonly class UpdateFoodRequest
 {

@@ -60,6 +60,7 @@ final class FoodTest extends ApplicationTestCase
             'image' => nullable(non_empty_string()),
             'averageRating' => int(),
             'ratings' => vec($ratingResponseType),
+            'comments' => vec(non_empty_string()),
             'personalRating' => nullable($ratingResponseType),
         ]);
 
