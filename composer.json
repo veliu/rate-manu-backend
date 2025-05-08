@@ -4,10 +4,10 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "azjezz/psl": "^2.9",
+        "azjezz/psl": "^3",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -20,26 +20,26 @@
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^2.0",
         "runtime/frankenphp-symfony": "^0.2.0",
-        "symfony/asset": "7.1.*",
-        "symfony/console": "7.1.*",
-        "symfony/doctrine-messenger": "7.1.*",
-        "symfony/dotenv": "7.1.*",
-        "symfony/filesystem": "7.1.*",
+        "symfony/asset": "7.2.*",
+        "symfony/console": "7.2.*",
+        "symfony/doctrine-messenger": "7.2.*",
+        "symfony/dotenv": "7.2.*",
+        "symfony/filesystem": "7.2.*",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "7.1.*",
-        "symfony/mailer": "7.1.*",
-        "symfony/messenger": "7.1.*",
+        "symfony/framework-bundle": "7.2.*",
+        "symfony/mailer": "7.2.*",
+        "symfony/messenger": "7.2.*",
         "symfony/monolog-bundle": "^3.10",
-        "symfony/password-hasher": "7.1.*",
-        "symfony/property-access": "7.1.*",
-        "symfony/property-info": "7.1.*",
-        "symfony/runtime": "7.1.*",
-        "symfony/security-bundle": "7.1.*",
-        "symfony/serializer": "7.1.*",
-        "symfony/twig-bundle": "7.1.*",
-        "symfony/uid": "7.1.*",
-        "symfony/validator": "7.1.*",
-        "symfony/yaml": "7.1.*",
+        "symfony/password-hasher": "7.2.*",
+        "symfony/property-access": "7.2.*",
+        "symfony/property-info": "7.2.*",
+        "symfony/runtime": "7.2.*",
+        "symfony/security-bundle": "7.2.*",
+        "symfony/serializer": "7.2.*",
+        "symfony/twig-bundle": "7.2.*",
+        "symfony/uid": "7.2.*",
+        "symfony/validator": "7.2.*",
+        "symfony/yaml": "7.2.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
@@ -51,8 +51,8 @@
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11.2",
         "qossmic/deptrac": "^2.0",
-        "symfony/browser-kit": "7.1.*",
-        "symfony/css-selector": "7.1.*"
+        "symfony/browser-kit": "7.2.*",
+        "symfony/css-selector": "7.2.*"
     },
     "config": {
         "allow-plugins": {
@@ -100,7 +100,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.1.*"
+            "require": "7.2.*"
         }
     }
 }
