@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\Response;
 
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Veliu\RateManu\Domain\Comment\CommentCollection;
 
