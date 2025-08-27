@@ -24,11 +24,11 @@ class GroupRelation
 
     public function __construct(
         #[ManyToOne(targetEntity: User::class, inversedBy: 'userGroups')]
-        readonly public User $user,
+        public readonly User $user,
         #[ManyToOne(targetEntity: Group::class, inversedBy: 'userGroups')]
-        readonly public Group $group,
+        public readonly Group $group,
         #[ORM\Column(type: 'string', enumType: Role::class)]
-        readonly public Role $role,
+        public readonly Role $role,
     ) {
         $this->id = Uuid::v4();
         $now = new \DateTime('now');

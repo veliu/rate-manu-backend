@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         public Uuid $id,
 
         #[ORM\Column(type: EmailAddress::DATABASE_TYPE_NAME, unique: true)]
-        readonly public EmailAddress $email,
+        public readonly EmailAddress $email,
 
         /** @phpstan-var list<non-empty-string> */
         #[ORM\Column(type: 'json')]
@@ -92,9 +92,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @psalm-return list<non-empty-string>
-     *
      * @return string[]
+     *
+     * @psalm-return list<non-empty-string>
      */
     public function getRoles(): array
     {

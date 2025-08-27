@@ -11,27 +11,28 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Veliu\RateManu\Domain\Comment\Comment;
+use Veliu\RateManu\Domain\EntityInterface;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\Rating\Rating;
 use Veliu\RateManu\Domain\User\User;
 use Veliu\RateManu\Infra\Doctrine\Repository\FoodRepository;
 
 #[ORM\Entity(repositoryClass: FoodRepository::class)]
-class Food
+class Food implements EntityInterface
 {
     use TimestampableEntity;
 
     /**
-     * @phpstan-param non-empty-string $name
-     * @phpstan-param non-empty-string|null $description
-     *
      * @param Collection<int, Rating>  $ratings
      * @param Collection<int, Comment> $comments
+     *
+     * @phpstan-param non-empty-string $name
+     * @phpstan-param non-empty-string|null $description
      */
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(type: UuidType::NAME, unique: true)]
-        readonly public Uuid $id,
+        public readonly Uuid $id,
 
         #[ORM\Column]
         public string $name,
@@ -104,5 +105,15 @@ class Food
         }
 
         return null;
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public static function getName(): string
+    {
+        return 'Food';
     }
 }

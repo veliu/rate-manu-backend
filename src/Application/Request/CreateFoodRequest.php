@@ -11,10 +11,6 @@ use Veliu\RateManu\Domain\Food\Command\CreateFood;
 use Veliu\RateManu\Domain\Group\Group;
 use Veliu\RateManu\Domain\User\User;
 
-use function Psl\Type\non_empty_string;
-use function Psl\Type\null;
-use function Psl\Type\union;
-
 final readonly class CreateFoodRequest
 {
     public function __construct(
@@ -24,27 +20,34 @@ final readonly class CreateFoodRequest
             new Assert\IsNull(),
         ])]
         #[Assert\NotBlank(allowNull: true)]
-        public mixed $id,
+        public ?string $id,
 
         #[OA\Property(type: 'string')]
         #[Assert\NotBlank]
-        public mixed $name,
+        public ?string $name,
 
         #[OA\Property(type: 'string', nullable: true)]
         #[Assert\NotBlank(allowNull: true)]
-        public mixed $description,
+        public ?string $description,
     ) {
     }
 
     public function toDomainCommand(Group $group, User $user): CreateFood
     {
-        $id = non_empty_string()->matches($this->id)
-            ? Uuid::fromString($this->id)
-            : Uuid::v4();
+        $id = $this->id;
+        $name = $this->name;
+        $description = $this->description;
 
-        $name = non_empty_string()->coerce($this->name);
-        $description = union(non_empty_string(), null())->coerce($this->description);
+        \Webmozart\Assert\Assert::nullOrUuid($id);
+        \Webmozart\Assert\Assert::stringNotEmpty($name);
+        \Webmozart\Assert\Assert::nullOrStringNotEmpty($description);
 
-        return new CreateFood($id, $name, $description, $group, $user);
+        return new CreateFood(
+            $id ? Uuid::fromString($id) : Uuid::v4(),
+            $name,
+            $description,
+            $group,
+            $user
+        );
     }
 }

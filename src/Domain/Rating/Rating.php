@@ -21,7 +21,7 @@ class Rating
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(type: UuidType::NAME, unique: true)]
-        readonly public Uuid $id,
+        public readonly Uuid $id,
 
         #[ORM\ManyToOne(targetEntity: User::class)]
         #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]

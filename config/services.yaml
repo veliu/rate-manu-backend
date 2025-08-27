@@ -31,6 +31,13 @@ services:
     Veliu\RateManu\Domain\Comment\Handler\:
         resource: '../src/Domain/Comment/Handler'
 
+    Veliu\RateManu\Domain\Ingredient\Handler\:
+      resource: '../src/Domain/Ingredient/Handler'
+
+
+    Veliu\RateManu\Domain\Food\Ingredient\Handler\:
+      resource: '../src/Domain/Food/Ingredient/Handler'
+
     # Controller
     Veliu\RateManu\Application\RestApi\Authentication\:
         resource: '../src/Application/RestApi/Authentication'
@@ -48,6 +55,10 @@ services:
         resource: '../src/Application/RestApi/Rating'
         tags: [ 'controller.service_arguments' ]
 
+    Veliu\RateManu\Application\RestApi\Ingredient\:
+      resource: '../src/Application/RestApi/Ingredient'
+      tags: [ 'controller.service_arguments' ]
+
     Veliu\RateManu\Application\ValueResolver\:
         resource: '../src/Application/ValueResolver'
         tags: [ 'controller.argument_value_resolver', 'controller.targeted_value_resolver' ]
@@ -57,5 +68,9 @@ services:
     Veliu\RateManu\Domain\Food\FoodRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\FoodRepository'
     Veliu\RateManu\Domain\Rating\RatingRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\RatingRepository'
     Veliu\RateManu\Domain\Comment\CommentRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\CommentRepository'
+    Veliu\RateManu\Domain\Ingredient\IngredientRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\IngredientRepository'
+    Veliu\RateManu\Domain\Food\Ingredient\FoodIngredientRepositoryInterface: '@Veliu\RateManu\Infra\Doctrine\Repository\FoodIngredientRepository'
 
     Veliu\RateManu\Application\RestApi\UserChecker: ~
+
+    Veliu\RateManu\Infra\Symfony\Validator\Constraint\EntityExistsValidator: ~

@@ -16,11 +16,11 @@ use function Psl\Type\non_empty_vec;
 final readonly class UserResponse
 {
     /**
+     * @param Uuid[] $groups
+     *
      * @phpstan-param non-empty-string $email
      * @phpstan-param non-empty-list<Uuid> $groups
      * @phpstan-param non-empty-string|null $name
-     *
-     * @param Uuid[] $groups
      */
     public function __construct(
         public Uuid $id,

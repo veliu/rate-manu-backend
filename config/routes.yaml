@@ -26,5 +26,12 @@ rest_food-rating:
   type: attribute
   prefix: /api/food-rating/
 
+rest_ingredient:
+  resource:
+    path: ../src/Application/RestApi/Ingredient/
+    namespace: Veliu\RateManu\Application\RestApi\Ingredient
+  type: attribute
+  prefix: /api/ingredient/
+
 api_token_invalidate:
   path: /api/token/invalidate
