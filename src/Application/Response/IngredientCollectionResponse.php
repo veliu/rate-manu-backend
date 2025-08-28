@@ -8,6 +8,7 @@ use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Veliu\RateManu\Domain\Ingredient\IngredientEntityCollection;
 
+#[OA\Schema(title: 'IngredientCollectionResponse', type: 'object')]
 final readonly class IngredientCollectionResponse
 {
     /**

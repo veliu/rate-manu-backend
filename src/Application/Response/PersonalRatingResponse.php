@@ -15,7 +15,7 @@ final readonly class PersonalRatingResponse
     public function __construct(
         public Uuid $id,
         public Uuid $food,
-        #[OA\Property(type: 'int', enum: [1, 2, 3, 4, 5, 6])]
+        #[OA\Property(type: 'integer', enum: [1, 2, 3, 4, 5, 6])]
         public int $rating,
         public Uuid $createdBy,
         #[OA\Property(format: 'date-time')]

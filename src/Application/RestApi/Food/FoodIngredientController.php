@@ -29,6 +29,13 @@ final readonly class FoodIngredientController
     }
 
     #[Route(path: '/{foodId}/ingredients', name: '_read', methods: ['GET'])]
+    #[OA\Parameter(
+        name: 'foodId',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns food ingredients',
@@ -46,6 +53,13 @@ final readonly class FoodIngredientController
     }
 
     #[Route(path: '/{foodId}/ingredients', name: '_add', methods: ['POST'])]
+    #[OA\Parameter(
+        name: 'foodId',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns food ingredients',

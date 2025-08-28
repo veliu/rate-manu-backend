@@ -18,6 +18,10 @@ use Veliu\RateManu\Domain\ValueObject\EmailAddress;
 
 #[OA\Tag('Authentication')]
 #[Route(path: '/confirm-registration', methods: ['POST'], format: 'json')]
+#[OA\Response(
+    response: 204,
+    description: 'Successfully confirmed user registration.',
+)]
 final readonly class ConfirmUserRegistrationAction
 {
     public function __construct(

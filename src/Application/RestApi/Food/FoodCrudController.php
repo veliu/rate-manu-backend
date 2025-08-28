@@ -39,6 +39,13 @@ final readonly class FoodCrudController
     }
 
     #[Route(path: '/{id}', name: '_read', methods: ['GET'])]
+    #[OA\Parameter(
+        name: 'id',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns food',
@@ -59,6 +66,13 @@ final readonly class FoodCrudController
     }
 
     #[Route(path: '/{id}', name: '_delete', methods: ['DELETE'])]
+    #[OA\Parameter(
+        name: 'id',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(response: 204, description: 'Food deleted')]
     #[OA\Response(response: 404, description: 'Food does not exist')]
     public function delete(Uuid $id): JsonResponse
@@ -118,6 +132,13 @@ final readonly class FoodCrudController
     }
 
     #[Route(path: '/{id}', name: '_update', methods: ['PUT'], format: 'json')]
+    #[OA\Parameter(
+        name: 'id',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns updated food',

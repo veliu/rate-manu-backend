@@ -26,8 +26,13 @@ final readonly class Filter
         public mixed $operator,
 
         #[Assert\Type(['string', 'integer', 'numeric', 'bool'])]
-        #[OA\Property(type: ['string', 'number', 'integer', 'bool'])]
-        public mixed $value,
+        #[OA\Property(oneOf: [
+            new OA\Schema(type: 'string'),
+            new OA\Schema(type: 'number'),
+            new OA\Schema(type: 'integer'),
+            new OA\Schema(type: 'boolean'),
+        ])]
+        public string|int|float|bool $value,
     ) {
     }
 }

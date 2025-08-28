@@ -55,6 +55,13 @@ final readonly class IngredientCrudController
     }
 
     #[Route(path: '/{id}', name: '_read', methods: ['GET'])]
+    #[OA\Parameter(
+        name: 'id',
+        description: 'The ID of the ingredient',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns food',

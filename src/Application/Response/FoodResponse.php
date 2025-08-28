@@ -43,7 +43,7 @@ final readonly class FoodResponse
             example: 'https://api.ratemanu.com/uploads/food/123-image.jpeg'
         )]
         public ?string $image,
-        #[OA\Property(type: 'int', enum: [0, 1, 2, 3, 4, 5, 6])]
+        #[OA\Property(type: 'integer', enum: [0, 1, 2, 3, 4, 5, 6])]
         public int $averageRating,
         public array $ratings,
         public array $comments,

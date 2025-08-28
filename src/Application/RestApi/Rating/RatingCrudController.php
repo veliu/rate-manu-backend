@@ -34,6 +34,13 @@ final readonly class RatingCrudController
     ) {
     }
 
+    #[OA\Parameter(
+        name: 'foodId',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns a personal food rating',
@@ -57,6 +64,13 @@ final readonly class RatingCrudController
         return new JsonResponse(PersonalRatingResponse::fromEntity($rating), 200);
     }
 
+    #[OA\Parameter(
+        name: 'foodId',
+        description: 'The ID of the food',
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string', format: 'uuid')
+    )]
     #[OA\Response(
         response: 200,
         description: 'Returns ratings from all members',

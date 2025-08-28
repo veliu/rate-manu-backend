@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veliu\RateManu\Application\RestApi\Food;
 
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +22,13 @@ use Veliu\RateManu\Domain\User\User;
 use function Psl\Type\instance_of;
 
 #[OA\Tag('Food')]
+#[OA\Parameter(
+    name: 'id',
+    description: 'The ID of the food',
+    in: 'path',
+    required: true,
+    schema: new OA\Schema(type: 'string', format: 'uuid')
+)]
 #[OA\RequestBody(
     content: new OA\MediaType(
         mediaType: 'jpeg/png',
@@ -30,6 +38,11 @@ use function Psl\Type\instance_of;
             ]
         ),
     ),
+)]
+#[OA\Response(
+    response: 200,
+    description: 'Successfully updated food image.',
+    content: new Model(type: FoodResponse::class)
 )]
 #[Route(path: '/{id}/update-image', methods: ['POST'], format: 'multipart/form-data')]
 final readonly class UpdateImageAction
