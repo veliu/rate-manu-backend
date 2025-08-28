@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Veliu\RateManu\Application\Request\RegisterUserRequest;
 
 #[OA\Tag('Authentication')]
-#[Route(path: '/register', methods: ['POST'], format: 'json')]
+#[Route(path: '/register', name: 'register', methods: ['POST'], format: 'json')]
 #[OA\Response(response: 204, description: 'User registered successfully.', content: null)]
 #[OA\Response(response: 422, description: 'Validation errors.')]
 final readonly class RegisterUserAction
