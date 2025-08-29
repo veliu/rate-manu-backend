@@ -29,16 +29,6 @@ use function Psl\Type\instance_of;
     required: true,
     schema: new OA\Schema(type: 'string', format: 'uuid')
 )]
-#[OA\RequestBody(
-    content: new OA\MediaType(
-        mediaType: 'jpeg/png',
-        schema: new OA\Schema(
-            properties: [
-                new OA\Property('image', type: 'string', format: 'object'),
-            ]
-        ),
-    ),
-)]
 #[OA\Response(
     response: 200,
     description: 'Successfully updated food image.',
@@ -55,7 +45,7 @@ final readonly class UpdateImageAction
 
     public function __invoke(
         Uuid $id,
-        #[MapUploadedFile([new Assert\File(maxSize: '8388608', mimeTypes: ['image/png', 'image/jpeg'])])] UploadedFile $image,
+        #[MapUploadedFile([new Assert\File(maxSize: '8388608', mimeTypes: ['image/png', 'image/jpeg', 'image/gif'])])] UploadedFile $image,
         UserInterface $authenticatedUser,
     ): JsonResponse {
         $user = instance_of(User::class)->coerce($authenticatedUser);
