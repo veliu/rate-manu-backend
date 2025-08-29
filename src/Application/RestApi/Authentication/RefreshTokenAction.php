@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[OA\Tag('Authentication')]
 #[OA\Parameter(
     name: 'refresh_token',
-    in: 'path',
+    in: 'query',
     required: true,
     schema: new OA\Schema(type: 'string')
 )]
