@@ -8,21 +8,15 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[OA\Tag('Authentication')]
-#[OA\RequestBody(
-    description: 'User credentials',
+#[OA\Parameter(
+    name: 'refresh_token',
+    in: 'path',
     required: true,
-    content: new OA\JsonContent(
-        required: ['username', 'password'],
-        properties: [
-            new OA\Property(property: 'username', type: 'string', format: 'email'),
-            new OA\Property(property: 'password', type: 'string'),
-        ],
-        type: 'object',
-    )
+    schema: new OA\Schema(type: 'string')
 )]
 #[OA\Response(
     response: 200,
-    description: 'Successfully confirmed user registration.',
+    description: 'New access tokens.',
     content: new OA\JsonContent(
         required: ['token', 'refresh_token'],
         properties: [
@@ -32,8 +26,8 @@ use Symfony\Component\Routing\Attribute\Route;
         type: 'object',
     )
 )]
-#[Route(path: '/api/login_check', name: 'login_check', methods: ['POST'], format: 'json')]
-final readonly class LoginCheckAction
+#[Route(path: '/api/token/refresh', name: 'token_refresh', methods: ['POST'], format: 'json')]
+final readonly class RefreshTokenAction
 {
     public function __invoke()
     {
