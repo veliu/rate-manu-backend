@@ -32,6 +32,7 @@ use Symfony\Component\Routing\Attribute\Route;
         type: 'object',
     )
 )]
+#[OA\Response(response: 401, description: 'Invalid credentials.', )]
 #[Route(path: '/login_check', name: 'login_check', methods: ['POST'], format: 'json')]
 final readonly class LoginCheckAction
 {
