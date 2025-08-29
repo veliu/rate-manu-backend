@@ -21,7 +21,7 @@ use Veliu\RateManu\Domain\User\User;
 
 use function Psl\Type\instance_of;
 
-#[OA\Tag('Food')]
+#[OA\Tag('Food Images')]
 #[OA\Parameter(
     name: 'id',
     description: 'The ID of the food',
@@ -44,7 +44,7 @@ use function Psl\Type\instance_of;
     description: 'Successfully updated food image.',
     content: new Model(type: FoodResponse::class)
 )]
-#[Route(path: '/{id}/update-image', methods: ['POST'], format: 'multipart/form-data')]
+#[Route(path: '/{id}/update-image', name: 'food_images_update', methods: ['POST'], format: 'multipart/form-data')]
 final readonly class UpdateImageAction
 {
     public function __construct(

@@ -15,7 +15,7 @@ use Veliu\RateManu\Domain\User\User;
 use function Psl\Type\instance_of;
 
 #[OA\Tag('User')]
-#[Route(path: '/my-groups', name: 'my_groups', methods: ['GET'], format: 'json')]
+#[Route(path: '/my-groups', name: 'user_groups', methods: ['GET'], format: 'json')]
 final readonly class GetMyGroupsAction
 {
     #[OA\Response(

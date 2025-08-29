@@ -54,7 +54,7 @@ final readonly class IngredientCrudController
         );
     }
 
-    #[Route(path: '/{id}', name: '_read', methods: ['GET'])]
+    #[Route(path: '/{id}', name: '_get', methods: ['GET'])]
     #[OA\Parameter(
         name: 'id',
         description: 'The ID of the ingredient',

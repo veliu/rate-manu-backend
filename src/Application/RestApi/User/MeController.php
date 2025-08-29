@@ -46,7 +46,7 @@ final readonly class MeController
         description: 'Updated user data',
         content: new Model(type: UserResponse::class)
     )]
-    #[Route(name: '_put', methods: ['PUT'], format: 'json')]
+    #[Route(name: '_update', methods: ['PUT'], format: 'json')]
     public function put(
         UserInterface $authenticatedUser,
         #[MapRequestPayload] UpdateUserRequest $request,

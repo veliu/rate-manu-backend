@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Attribute\Route;
         type: 'object',
     )
 )]
-#[Route(path: '/api/token/refresh', name: 'token_refresh', methods: ['POST'], format: 'json')]
+#[Route(path: '/token/refresh', name: 'token_refresh', methods: ['POST'], format: 'json')]
 final readonly class RefreshTokenAction
 {
     public function __invoke()

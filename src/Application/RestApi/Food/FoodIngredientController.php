@@ -18,7 +18,7 @@ use Veliu\RateManu\Domain\Food\FoodRepositoryInterface;
 use Veliu\RateManu\Domain\Food\Ingredient\FoodIngredientRepositoryInterface;
 
 #[OA\Tag('Food Ingredients')]
-#[Route(name: 'food ingredients')]
+#[Route(name: 'food_ingredients')]
 final readonly class FoodIngredientController
 {
     public function __construct(

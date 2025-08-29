@@ -20,8 +20,8 @@ use Veliu\RateManu\Domain\User\User;
 
 use function Psl\Type\instance_of;
 
-#[OA\Tag('Food')]
-#[Route(name: 'food')]
+#[OA\Tag('Food Comments')]
+#[Route(name: 'food_comments')]
 final readonly class CommentCrudController
 {
     public function __construct(
@@ -30,7 +30,7 @@ final readonly class CommentCrudController
     ) {
     }
 
-    #[Route(path: '/{id}/comment', name: '_comment_create', methods: ['POST'], format: 'json')]
+    #[Route(path: '/{id}/comment', name: '_create', methods: ['POST'], format: 'json')]
     #[OA\Response(
         response: 200,
         description: 'Returns food',
@@ -56,7 +56,7 @@ final readonly class CommentCrudController
         return new JsonResponse(CommentResponse::fromEntity($comment), 200);
     }
 
-    #[Route(path: '/{id}/comment', name: '_comment_get_all', methods: ['GET'], format: 'json')]
+    #[Route(path: '/{id}/comment', name: '_get', methods: ['GET'], format: 'json')]
     #[OA\Response(
         response: 200,
         description: 'Returns food',

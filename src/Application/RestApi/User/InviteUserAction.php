@@ -21,7 +21,7 @@ use function Psl\Type\instance_of;
 #[OA\Tag('User')]
 #[OA\Response(response: 204, description: 'User invited')]
 #[OA\Response(response: 422, description: 'Validation Error')]
-#[Route(path: '/invite', name: 'invite', methods: ['POST'], format: 'json')]
+#[Route(path: '/invite', name: 'user_invite', methods: ['POST'], format: 'json')]
 final readonly class InviteUserAction
 {
     public function __construct(

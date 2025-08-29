@@ -46,7 +46,7 @@ final readonly class RatingCrudController
         description: 'Returns a personal food rating',
         content: new Model(type: PersonalRatingResponse::class)
     )]
-    #[Route(path: '/my/{foodId}', name: '_personal-rating', methods: ['GET'], format: 'json')]
+    #[Route(path: '/my/{foodId}', name: '_get-personal', methods: ['GET'], format: 'json')]
     public function getPersonalRating(
         Uuid $foodId,
         UserInterface $user,
@@ -76,7 +76,7 @@ final readonly class RatingCrudController
         description: 'Returns ratings from all members',
         content: new Model(type: PersonalRatingResponse::class)
     )]
-    #[Route(path: '/{foodId}', name: '_ratings', methods: ['GET'], format: 'json')]
+    #[Route(path: '/{foodId}', name: '_get', methods: ['GET'], format: 'json')]
     public function getRatings(
         Uuid $foodId,
         UserInterface $user,

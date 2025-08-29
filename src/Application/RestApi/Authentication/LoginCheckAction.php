@@ -32,7 +32,7 @@ use Symfony\Component\Routing\Attribute\Route;
         type: 'object',
     )
 )]
-#[Route(path: '/api/login_check', name: 'login_check', methods: ['POST'], format: 'json')]
+#[Route(path: '/login_check', name: 'login_check', methods: ['POST'], format: 'json')]
 final readonly class LoginCheckAction
 {
     public function __invoke()
