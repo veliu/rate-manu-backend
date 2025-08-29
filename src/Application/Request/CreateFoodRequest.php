@@ -14,7 +14,7 @@ use Veliu\RateManu\Domain\User\User;
 final readonly class CreateFoodRequest
 {
     public function __construct(
-        #[OA\Property(description: 'Will be generated if not provided', type: 'string', format: 'uuid')]
+        #[OA\Property(description: 'Will be generated if not provided', type: 'string', format: 'uuid', nullable: true)]
         #[Assert\AtLeastOneOf([
             new Assert\Uuid(),
             new Assert\IsNull(),

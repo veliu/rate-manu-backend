@@ -8,11 +8,13 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[OA\Tag('Authentication')]
-#[OA\Parameter(
-    name: 'refresh_token',
-    in: 'query',
-    required: true,
-    schema: new OA\Schema(type: 'string')
+#[OA\RequestBody(
+    content: new OA\JsonContent(
+        required: ['refresh_token'],
+        properties: [
+            new OA\Property(property: 'refresh_token', type: 'string'),
+        ]
+    )
 )]
 #[OA\Response(
     response: 200,
@@ -26,7 +28,7 @@ use Symfony\Component\Routing\Attribute\Route;
         type: 'object',
     )
 )]
-#[Route(path: '/token/refresh', name: 'token_refresh', methods: ['GET'], format: 'json')]
+#[Route(path: '/token/refresh', name: 'token_refresh', methods: ['POST'], format: 'json')]
 final readonly class RefreshTokenAction
 {
     public function __invoke()
