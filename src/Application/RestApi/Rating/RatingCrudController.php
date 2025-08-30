@@ -74,7 +74,7 @@ final readonly class RatingCrudController
     #[OA\Response(
         response: 200,
         description: 'Returns ratings from all members',
-        content: new Model(type: PersonalRatingResponse::class)
+        content: new Model(type: RatingCollectionResponse::class)
     )]
     #[Route(path: '/{foodId}', name: '_get', methods: ['GET'], format: 'json')]
     public function getRatings(
