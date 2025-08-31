@@ -25,11 +25,11 @@ class FoodIngredient implements EntityInterface
         public readonly Uuid $id,
 
         #[ORM\ManyToOne(targetEntity: Food::class)]
-        #[ORM\JoinColumn(name: 'food_id', referencedColumnName: 'id')]
+        #[ORM\JoinColumn(name: 'food_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
         public readonly Food $food,
 
         #[ORM\ManyToOne(targetEntity: Ingredient::class)]
-        #[ORM\JoinColumn(name: 'ingredient_id', referencedColumnName: 'id')]
+        #[ORM\JoinColumn(name: 'ingredient_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
         public readonly Ingredient $ingredient,
 
         #[ORM\Column(enumType: UnitEnum::class)]
