@@ -38,6 +38,7 @@ final readonly class CreateIngredientRequest
 
         #[OA\Property(type: 'string', enum: UnitEnum::VALUES)]
         #[Assert\NotBlank]
+        #[Assert\Choice(UnitEnum::VALUES)]
         public ?string $defaultUnit,
 
         #[OA\Property(
