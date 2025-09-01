@@ -39,10 +39,7 @@ final readonly class FoodIngredientController
     #[OA\Response(
         response: 200,
         description: 'Returns food ingredients',
-        content: new OA\JsonContent(
-            type: 'array',
-            items: new OA\Items(ref: new Model(type: FoodIngredientResponse::class))
-        )
+        content: new Model(type: FoodIngredientCollectionResponse::class)
     )]
     #[OA\Response(response: 404, description: 'Food does not exist')]
     public function get(Uuid $foodId): JsonResponse
@@ -63,10 +60,7 @@ final readonly class FoodIngredientController
     #[OA\Response(
         response: 200,
         description: 'Returns food ingredients',
-        content: new OA\JsonContent(
-            type: 'array',
-            items: new OA\Items(ref: new Model(type: FoodIngredientResponse::class))
-        )
+        content: new Model(type: FoodIngredientCollectionResponse::class)
     )]
     #[OA\Response(
         response: 404,
