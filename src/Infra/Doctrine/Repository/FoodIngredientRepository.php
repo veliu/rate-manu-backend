@@ -54,4 +54,9 @@ final class FoodIngredientRepository extends ServiceEntityRepository implements 
 
         return new FoodIngredientEntityCollection($result);
     }
+
+    public function findByFoodAndIngredient(Uuid $foodId, Uuid $ingredientId): ?FoodIngredient
+    {
+        return $this->findOneBy(['food' => $foodId, 'ingredient' => $ingredientId]);
+    }
 }

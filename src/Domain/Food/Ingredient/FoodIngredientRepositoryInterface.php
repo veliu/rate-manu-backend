@@ -18,4 +18,6 @@ interface FoodIngredientRepositoryInterface
     public function upsert(FoodIngredient $food): void;
 
     public function findByFood(Uuid $foodId): FoodIngredientEntityCollection;
+
+    public function findByFoodAndIngredient(Uuid $foodId, Uuid $ingredientId): ?FoodIngredient;
 }
